@@ -17,7 +17,9 @@ A browser-based companion for showing mockups, diagrams, and visual options duri
 ./skills/brainstorming/scripts/start-server.sh --project-dir /path/to/project
 
 # Returns JSON with URL:
-# {"url": "http://localhost:53124", "pid": 12345, "screen_dir": "/path/to/project/.superpowers/brainstorm/session-id/content"}
+# {"url": "http://localhost:53124", "pid": 12345, "state_dir": "/path/to/project/.superpowers/brainstorm/session-id/state", "screen_dir": "/path/to/project/.superpowers/brainstorm/session-id/content"}
+#
+# Note: state_dir is $STATE_DIR (contains events file), its parent is $SESSION_DIR (needed for stop-server.sh)
 ```
 
 **Options:**
@@ -63,7 +65,7 @@ Read the state file to get the user's choice:
 
 ```bash
 # Read the latest click event
-cat "$STATE_DIR/latest-click.json"
+tail -1 "$STATE_DIR/events"
 
 # Returns:
 # {"type":"click","text":"Microservices","choice":"A","timestamp":1712345678901}
@@ -72,7 +74,7 @@ cat "$STATE_DIR/latest-click.json"
 ## Stopping the Server
 
 ```bash
-./skills/brainstorming/scripts/stop-server.sh --project-dir /path/to/project
+./skills/brainstorming/scripts/stop-server.sh "$SESSION_DIR"
 ```
 
 ## UI Components
@@ -191,7 +193,7 @@ EOF",
 **5. Read selection:**
 ```bash
 Bash({
-  command: "cat $STATE_DIR/latest-click.json",
+  command: "tail -1 $STATE_DIR/events",
   description: "Read user's visual companion selection"
 })
 ```
@@ -199,7 +201,7 @@ Bash({
 **6. Stop server (optional):**
 ```bash
 Bash({
-  command: "./skills/brainstorming/scripts/stop-server.sh --project-dir $(pwd)",
+  command: "./skills/brainstorming/scripts/stop-server.sh \"$SESSION_DIR\"",
   description: "Stop brainstorm visual companion server"
 })
 ```

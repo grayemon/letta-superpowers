@@ -8,7 +8,7 @@ Use this template when dispatching a code quality reviewer subagent.
 
 ```
 Task({
-  subagent_type: "explore",
+  subagent_type: "general-purpose",
   description: "Review code quality for Task N",
   prompt: `
     Use the code review template at requesting-code-review/code-reviewer.md
