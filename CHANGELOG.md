@@ -2,27 +2,49 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
-## [Letta-1.0.0] - 2026-04-09
+## [v1.0.0] - 2026-04-13
+
+First stable release of Letta Code adaptation.
 
 ### Added
-- Letta Code compatible skill set
+- 14 Letta Code compatible skills
 - `skills/using-superpowers/references/letta-code-tools.md` for Letta Code tool reference
+- `history-analyzer` subagent type to tools reference
+- `.superpowers/` to .gitignore (session files)
+- Bash timeout warning in visual-companion.md
 
 ### Changed
 - All Task() tool calls updated to Letta Code structured parameter syntax: `Task({ subagent_type, description, prompt, model })`
 - Removed `superpowers:` namespace prefix from all skill references
 - Updated code review workflow to use `subagent_type: "general-purpose"` (no custom agent definition needed)
-- Visual Companion adapted for Letta Code
+- Visual Companion adapted for Letta Code with `run_in_background: true` guidance
+- `docs/superpowers/specs/` → `docs/specs/` (5 skills updated)
+- `docs/superpowers/plans/` → `docs/plans/` (2 skills updated)
+- `~/.config/superpowers/` → `~/.config/letta-superpowers/` (config paths)
+
+### Fixed
+- Removed non-existent `"fork"` subagent type from letta-code-tools.md
+- Fixed `"inherit"` model param (should omit param, not pass literal)
+- Replaced Claude Code `@` file syntax with explicit Read instructions
+- Removed reference to missing `.letta/INSTALL.md`
+- Replaced Jesse-specific paths with generic `/home/user/` paths
+- Removed Jesse person references from skill docs
+- Added cloud interface caveate to Visual Companion documentation
+- Removed reference to missing `elements-of-style:writing-clearly-and-concisely` skill
+- Clarified `@` syntax explanation for Letta Code context
+- Fixed "Lace" project reference in condition-based-waiting-example.ts
 
 ### Removed
 - Platform-specific directories: `.claude-plugin/`, `.cursor-plugin/`, `.opencode/`, `.codex/`
 - Platform-specific files: `hooks/`, `agents/`, `GEMINI.md`, `AGENTS.md`
-- Platform-specific docs: `docs/`, `RELEASE-NOTES.md`, `ezra-discord-chat.md`
 - Plugin infrastructure: `scripts/bump-version.sh`, `package.json`, `.version-bump.json`
 - Original contributor guidelines: `CLAUDE.md`
 
-### Original Project
+### Known Limitations
+- Visual Companion requires local Letta Code CLI execution
+- Brainstorm server subject to Letta Code's 120s Bash timeout
 
-This is a Letta Code port of [obra/superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
-
-For the original project's history and release notes, see the upstream repository.
+### Credits
+- Original: [obra/superpowers](https://github.com/obra/superpowers) by Jesse Vincent
+- Letta Code adaptation: Raymond
+- Review feedback: Ezra (Letta/MemGPT Team)
