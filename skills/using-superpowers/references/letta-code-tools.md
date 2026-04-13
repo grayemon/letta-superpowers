@@ -18,6 +18,7 @@ Tool names and syntax for Superpowers skills in Letta Code.
 |---------------|----------|--------|
 | `"general-purpose"` | Full implementation - read/write | Read/write |
 | `"explore"` | Codebase search, file finding | Read-only |
+| `"history-analyzer"` | Analyze conversation history, update memory | Read/write |
 | `"memory"` | Reorganize memory blocks | Read/write |
 | `"init"` | Initialize agent memory | Read/write |
 | `"recall"` | Search conversation history | Read-only |

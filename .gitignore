@@ -1,5 +1,7 @@
 .worktrees/
+.superpowers/
 .private-journal/
+docs/
 .claude/
 .letta/
 .DS_Store

@@ -1,7 +1,9 @@
 // Complete implementation of condition-based waiting utilities
-// From: Lace test infrastructure improvements (2025-10-03)
+// Example: test infrastructure improvements (illustrative code)
 // Context: Fixed 15 flaky tests by replacing arbitrary timeouts
 
+// Note: The imports below are project-specific example code.
+// In a real project, these would reference your actual thread management types.
 import type { ThreadManager } from '~/threads/thread-manager';
 import type { LaceEvent, LaceEventType } from '~/threads/types';
 
