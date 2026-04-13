@@ -2,6 +2,17 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [v1.0.1] - 2026-04-13
+
+### Fixed
+- Removed incorrect `run_in_background: true` from visual-companion.md (start-server.sh handles backgrounding via nohup)
+- Updated Visual Companion documentation with accurate Note about nohup behavior and --foreground flag warning
+- Changed frame-template.html header link from obra/superpowers to grayemon/letta-superpowers
+- Added `**/diagrams/` to .gitignore for render-graphs.js output
+
+### Changed
+- Updated Known Limitations: Visual Companion server runs independently via nohup (not subject to 120s timeout)
+
 ## [v1.0.0] - 2026-04-13
 
 First stable release of Letta Code adaptation.
@@ -11,7 +22,6 @@ First stable release of Letta Code adaptation.
 - `skills/using-superpowers/references/letta-code-tools.md` for Letta Code tool reference
 - `history-analyzer` subagent type to tools reference
 - `.superpowers/` to .gitignore (session files)
-- Bash timeout warning in visual-companion.md
 
 ### Changed
 - All Task() tool calls updated to Letta Code structured parameter syntax: `Task({ subagent_type, description, prompt, model })`
@@ -42,7 +52,7 @@ First stable release of Letta Code adaptation.
 
 ### Known Limitations
 - Visual Companion requires local Letta Code CLI execution
-- Brainstorm server subject to Letta Code's 120s Bash timeout
+- Brainstorm server runs via nohup (independent of Bash timeout)
 
 ### Credits
 - Original: [obra/superpowers](https://github.com/obra/superpowers) by Jesse Vincent
