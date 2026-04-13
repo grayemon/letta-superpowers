@@ -2,6 +2,23 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [v1.1.0] - 2026-04-13
+
+### Added
+- **Canonical Skill Sequence** to `using-superpowers/SKILL.md`: 8-step workflow chain (brainstorming → worktrees → plans → execute → review → finish → release)
+- **Task Type → Skill Mapping** table: Quick reference for which skill to use first
+- **Hard Gates** section: 4 non-negotiable rules (no code before design, etc.)
+- **When to Parallelize** rules: Guidance for using `dispatching-parallel-agents`
+- **Built-in Skill Overlap** guidance: Clarifies when to use superpowers skills vs Letta Code built-ins
+
+### Changed
+- Renamed `writing-skills` → `skill-authoring-tdd` to avoid trigger collision with built-in `creating-skills`
+- Updated README.md with new skill name
+- Updated internal reference in `testing-skills-with-subagents.md`
+
+### Fixed
+- Normalized line endings to LF (enforced by .gitattributes)
+
 ## [v1.0.2] - 2026-04-13
 
 ### Fixed
