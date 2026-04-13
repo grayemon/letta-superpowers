@@ -2,6 +2,20 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [v1.0.2] - 2026-04-13
+
+### Fixed
+- visual-companion.md: Changed `latest-click.json` → `tail -1 $STATE_DIR/events` (server writes NDJSON)
+- visual-companion.md: Fixed stop-server.sh argument from `--project-dir` to `$SESSION_DIR`
+- visual-companion.md: Added note explaining `state_dir` vs `SESSION_DIR` relationship
+- code-quality-reviewer-prompt.md: Changed subagent_type from `explore` to `general-purpose` (needs Bash for git diff)
+- brainstorming/SKILL.md: Removed non-existent `frontend-design`, `mcp-builder` references
+- using-superpowers/SKILL.md: Changed skill examples to existing skills
+- render-graphs.js: Changed "your human partner" → "the user"
+
+### Impact
+- Full brainstorming workflow (start server → push content → read selection → stop server) now works end-to-end
+
 ## [v1.0.1] - 2026-04-13
 
 ### Fixed
