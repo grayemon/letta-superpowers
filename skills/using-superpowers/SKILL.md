@@ -92,9 +92,11 @@ When multiple skills could apply, use this order:
 
 1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
 2. **Implementation skills second** (test-driven-development, systematic-debugging) - these guide execution
+3. **Completion skills last** (finishing-a-development-branch, releasing) - these finalize work
 
 "Let's build X" → brainstorming first, then implementation skills.
 "Fix this bug" → debugging first, then domain-specific skills.
+"Done with feature" → finishing-a-development-branch, optionally releasing.
 
 ## Skill Types
 

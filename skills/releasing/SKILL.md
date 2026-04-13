@@ -238,11 +238,11 @@ After publishing:
 ## Integration
 
 **Can be called by:**
-- `finishing-a-development-branch` (Option 5: Create Release)
+- `finishing-a-development-branch` (Option 3: Merge and Create Release)
 - Directly when user says "create a release" or "do a release"
 
 **Sequence after finishing-a-development-branch:**
-1. Merge completes → Option 5 selected
+1. Merge completes → Option 3 selected
 2. Invoke releasing skill
 3. Complete release workflow
 4. Return to cleanup worktree
