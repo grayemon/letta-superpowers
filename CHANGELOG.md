@@ -6,7 +6,6 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 
 ### Added
 - Letta Code compatible skill set
-- `.letta/INSTALL.md` for easy installation instructions
 - `skills/using-superpowers/references/letta-code-tools.md` for Letta Code tool reference
 
 ### Changed

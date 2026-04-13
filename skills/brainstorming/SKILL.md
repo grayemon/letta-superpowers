@@ -110,7 +110,6 @@ digraph brainstorming {
 
 - Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
   - (User preferences for spec location override this default)
-- Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git
 
 **Spec Self-Review:**
@@ -163,4 +162,6 @@ A question about a UI topic is not automatically a visual question. "What does p
 
 If they agree to the companion, read the detailed guide before proceeding:
 `skills/brainstorming/visual-companion.md`
+
+> **Note:** Visual Companion requires local execution (Letta Code CLI). Not available when running via cloud interfaces (chat.letta.com, Cloud ADE, or remote LettaBot).
 

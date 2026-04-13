@@ -18,7 +18,6 @@ Tool names and syntax for Superpowers skills in Letta Code.
 |---------------|----------|--------|
 | `"general-purpose"` | Full implementation - read/write | Read/write |
 | `"explore"` | Codebase search, file finding | Read-only |
-| `"fork"` | Fork parent context | Read/write |
 | `"memory"` | Reorganize memory blocks | Read/write |
 | `"init"` | Initialize agent memory | Read/write |
 | `"recall"` | Search conversation history | Read-only |
@@ -30,7 +29,7 @@ Tool names and syntax for Superpowers skills in Letta Code.
 |-------------|----------|
 | `"auto-fast"` | Quick, straightforward tasks |
 | `"auto"` | Default - complex reasoning |
-| `"inherit"` | Inherit from parent agent |
+| (omit param) | Inherit from parent agent |
 | Explicit handle | Use specific model |
 
 ## Task Tool Syntax

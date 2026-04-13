@@ -25,7 +25,7 @@ mkdir -p .skills
 cp -r /tmp/superpowers-letta/skills/* .skills/
 ```
 
-**See `.letta/INSTALL.md` for detailed installation options.**
+
 
 ## The Basic Workflow
 
