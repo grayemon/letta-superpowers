@@ -26,7 +26,7 @@ A browser-based companion for showing mockups, diagrams, and visual options duri
 - `--url-host <host>` - Hostname shown in URL
 - `--foreground` - Run in foreground (for environments that reap background processes)
 
-> **Warning:** Letta Code's Bash tool has a 120-second hard timeout even for background processes. The server may be killed after 2 minutes. For longer sessions, consider starting the server manually outside of Letta Code, or be prepared to restart it.
+> **Note:** The server starts via nohup and runs independently. The start script exits within seconds, returning a JSON object with the server URL and paths. The --foreground flag should NOT be used with Letta Code Bash tool, as it would block until the 120-second timeout kills the process.
 
 ## Pushing Content
 
@@ -151,8 +151,7 @@ The frame template provides pre-styled components:
 ```typescript
 Bash({
   command: "cd /path/to/project && ./skills/brainstorming/scripts/start-server.sh --project-dir $(pwd)",
-  description: "Start brainstorm visual companion server",
-  run_in_background: true  // REQUIRED - server needs to run indefinitely
+  description: "Start brainstorm visual companion server"
 })
 ```
 
