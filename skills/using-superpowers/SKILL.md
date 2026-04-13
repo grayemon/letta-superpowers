@@ -141,6 +141,16 @@ The superpowers workflow is a strict sequential chain:
 - ❌ Sequential skill chain (brainstorming → plans → execute)
 - ❌ Tasks with dependencies between them
 
+## Built-in Skill Overlap
+
+Letta Code has built-in skills with similar purposes. Use these guidelines:
+
+| Overlap | Use This | Why |
+|---------|----------|-----|
+| Creating skills | `skill-authoring-tdd` | TDD methodology for skill verification. Built-in `creating-skills` is for structure/packaging. |
+| Git worktrees | `using-git-worktrees` | Canonical workflow step 2. Built-in `working-in-parallel` is an alternative with different directory convention. |
+| Parallel dispatch | `dispatching-parallel-agents` | For internal Task subagents. Built-in `dispatching-coding-agents` is for external CLIs (`claude`, `codex`) — different purpose, no conflict. |
+
 ## Skill Types
 
 **Rigid** (TDD, debugging): Follow exactly. Don't adapt away discipline.

@@ -65,7 +65,7 @@ cp -r /tmp/superpowers-letta/skills/* .skills/
 - **releasing** - Create releases with pre-flight checklist and version management
 
 ### Meta
-- **writing-skills** - Create new skills following best practices
+- **skill-authoring-tdd** - Create new skills using TDD methodology
 - **using-superpowers** - Introduction to the skills system
 
 ## Philosophy
@@ -92,7 +92,7 @@ This is a port of the original Superpowers project. For contributions:
 1. **Upstream changes** - Submit PRs to [obra/superpowers](https://github.com/obra/superpowers)
 2. **Letta Code-specific adaptations** - Submit issues/PRs to this repository
 
-See `skills/writing-skills/SKILL.md` for the complete skill authoring guide.
+See `skills/skill-authoring-tdd/SKILL.md` for the complete skill authoring guide.
 
 ## Updating
 
