@@ -98,6 +98,49 @@ When multiple skills could apply, use this order:
 "Fix this bug" → debugging first, then domain-specific skills.
 "Done with feature" → finishing-a-development-branch, optionally releasing.
 
+## Canonical Skill Sequence
+
+The superpowers workflow is a strict sequential chain:
+
+1. **brainstorming** → Design through Q&A, outputs `docs/specs/*.md`
+2. **using-git-worktrees** → Isolated workspace (requires design approval)
+3. **writing-plans** → Break into 2-5 min tasks, outputs `docs/plans/*.md`
+4. **executing-plans** OR **subagent-driven-development** → Implement tasks
+5. **test-driven-development** → RED-GREEN-REFACTOR (used throughout)
+6. **requesting-code-review** → Quality gate
+7. **finishing-a-development-branch** → Merge/PR/keep decision
+8. **releasing** → (Optional) Semantic versioning, changelog
+
+## Which Skill to Use?
+
+| Task Type | First Skill | Followed By |
+|-----------|-------------|-------------|
+| "Build X" / "Add feature" | brainstorming | writing-plans → executing |
+| "Fix bug" / "Tests failing" | systematic-debugging | TDD to fix |
+| "Design approved, ready to code" | using-git-worktrees | writing-plans |
+| "Have plan, implement it" | subagent-driven-development | (or executing-plans) |
+| "Tests pass, what next?" | finishing-a-development-branch | releasing (optional) |
+| "Multiple independent failures" | dispatching-parallel-agents | Then debug each |
+
+## Hard Gates (Non-Negotiable)
+
+- ⛔ **No code before design** — brainstorming MUST complete first
+- ⛔ **No execution without worktree** — using-git-worktrees required before execution skills
+- ⛔ **Spec compliance review before code quality** — wrong order = red flag
+- ⛔ **3 failed fixes → stop** — question architecture, don't keep patching
+
+## When to Parallelize
+
+**Use `dispatching-parallel-agents` when:**
+- ✅ 2+ independent tasks (no shared state)
+- ✅ Different files/subsystems
+- ✅ Each problem understood without other context
+
+**Do NOT parallelize:**
+- ❌ Implementation tasks touching same files
+- ❌ Sequential skill chain (brainstorming → plans → execute)
+- ❌ Tasks with dependencies between them
+
 ## Skill Types
 
 **Rigid** (TDD, debugging): Follow exactly. Don't adapt away discipline.
