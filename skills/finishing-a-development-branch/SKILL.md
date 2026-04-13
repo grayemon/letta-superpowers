@@ -49,15 +49,16 @@ Or ask: "This branch split from main - is that correct?"
 
 ### Step 3: Present Options
 
-Present exactly these 4 options:
+Present exactly these 5 options:
 
 ```
 Implementation complete. What would you like to do?
 
 1. Merge back to <base-branch> locally
 2. Push and create a Pull Request
-3. Keep the branch as-is (I'll handle it later)
-4. Discard this work
+3. Merge and create a Release
+4. Keep the branch as-is (I'll handle it later)
+5. Discard this work
 
 Which option?
 ```
@@ -106,13 +107,30 @@ EOF
 
 Then: Cleanup worktree (Step 5)
 
-#### Option 3: Keep As-Is
+#### Option 3: Merge and Create Release
+
+First complete Option 1 (Merge Locally), then:
+
+**Invoke releasing skill:**
+```
+I'll now use the releasing skill to create a release.
+```
+
+Follow `skills/releasing/SKILL.md` workflow:
+- Pre-release checklist
+- CHANGELOG verification
+- Tag creation
+- GitHub release
+
+After release completes, cleanup worktree (Step 5).
+
+#### Option 4: Keep As-Is
 
 Report: "Keeping branch <name>. Worktree preserved at <path>."
 
 **Don't cleanup worktree.**
 
-#### Option 4: Discard
+#### Option 5: Discard
 
 **Confirm first:**
 
@@ -138,7 +156,7 @@ Then: Cleanup worktree (Step 5)
 
 ### Step 5: Cleanup Worktree
 
-**For Options 1, 2, 4:**
+**For Options 1, 2, 3, 5:**
 
 Check if in worktree:
 
@@ -152,16 +170,17 @@ If yes:
 git worktree remove <worktree-path>
 ```
 
-**For Option 3:** Keep worktree.
+**For Option 4:** Keep worktree.
 
 ## Quick Reference
 
-| Option           | Merge | Push | Keep Worktree | Cleanup Branch |
-| ---------------- | ----- | ---- | ------------- | -------------- |
-| 1. Merge locally | ✓     | -    | -             | ✓              |
-| 2. Create PR     | -     | ✓    | ✓             | -              |
-| 3. Keep as-is    | -     | -    | ✓             | -              |
-| 4. Discard       | -     | -    | -             | ✓ (force)      |
+| Option           | Merge | Push | Release | Keep Worktree | Cleanup Branch |
+| ---------------- | ----- | ---- | ------- | ------------- | -------------- |
+| 1. Merge locally | ✓     | -    | -       | -             | ✓              |
+| 2. Create PR     | -     | ✓    | -       | ✓             | -              |
+| 3. Merge+Release | ✓     | -    | ✓       | -             | ✓              |
+| 4. Keep as-is    | -     | -    | -       | ✓             | -              |
+| 5. Discard       | -     | -    | -       | -             | ✓ (force)      |
 
 ## Common Mistakes
 

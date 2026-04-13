@@ -62,6 +62,7 @@ cp -r /tmp/superpowers-letta/skills/* .skills/
 - **using-git-worktrees** - Parallel development branches
 - **finishing-a-development-branch** - Merge/PR decision workflow
 - **subagent-driven-development** - Fast iteration with two-stage review
+- **releasing** - Create releases with pre-flight checklist and version management
 
 ### Meta
 - **writing-skills** - Create new skills following best practices

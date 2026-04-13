@@ -1,0 +1,248 @@
+---
+name: releasing
+description: Use when creating a new release or tag — ensures pre-release checklist passes, CHANGELOG updated, proper versioning, and GitHub release created correctly
+---
+
+# Releasing
+
+## Overview
+
+Create releases with proper versioning, documentation, and verification. Ensures quality gates pass before publishing.
+
+**Core principle:** Verify → Document → Tag → Publish → Verify.
+
+**Announce at start:** "I'm using the releasing skill to create a new release."
+
+## Pre-Release Checklist
+
+**ALL items must pass before proceeding:**
+
+### 1. Working Tree Clean
+
+```bash
+git status
+```
+
+**MUST show:** `nothing to commit, working tree clean` or `Your branch is up to date`
+
+**If dirty:**
+```
+Working tree has uncommitted changes:
+[Show git status output]
+
+Commit or stash changes before releasing.
+```
+
+Stop. Don't proceed.
+
+### 2. Tests Pass (if applicable)
+
+```bash
+# Project-specific
+npm test / cargo test / pytest / go test ./...
+```
+
+**If tests fail:** Stop and fix. Don't release broken code.
+
+**If no tests:** Note in release process, proceed.
+
+### 3. CHANGELOG Updated
+
+```bash
+grep -E "^\#\# \[v[0-9]" CHANGELOG.md | head -1
+```
+
+**MUST contain:** Version number matching the planned release.
+
+**If missing:**
+```
+CHANGELOG.md missing vX.Y.Z section.
+
+Add changelog entry before releasing.
+```
+
+Stop. Update CHANGELOG first.
+
+### 4. Version Decision
+
+Determine version bump using Semantic Versioning:
+
+```
+MAJOR.MINOR.PATCH
+
+PATCH (0.0.X): Bug fixes, typo corrections
+MINOR (0.X.0): New features, backward compatible
+MAJOR (X.0.0): Breaking changes, restructure
+```
+
+**Decision flow:**
+
+```dot
+digraph version_decision {
+    "Breaking changes?" [shape=diamond];
+    "New features?" [shape=diamond];
+    "Bug fixes only?" [shape=diamond];
+
+    "Breaking changes?" -> "Bump MAJOR" [label="yes"];
+    "Breaking changes?" -> "New features?" [label="no"];
+    "New features?" -> "Bump MINOR" [label="yes"];
+    "New features?" -> "Bug fixes only?" [label="no"];
+    "Bug fixes only?" -> "Bump PATCH" [label="yes"];
+}
+```
+
+## Release Process
+
+### Step 1: Confirm Version
+
+Ask user to confirm version number:
+
+```
+Based on the changes, this should be vX.Y.Z (PATCH/MINOR/MAJOR).
+
+CHANGELOG shows version: [grep result]
+
+Is this correct?
+```
+
+Wait for confirmation.
+
+### Step 2: Final Commit (if needed)
+
+If CHANGELOG was just updated:
+
+```bash
+git add CHANGELOG.md
+git commit -m "docs: Update CHANGELOG for vX.Y.Z release
+
+👾 Generated with [Letta Code](https://letta.com)
+
+Co-Authored-By: Letta Code <noreply@letta.com>"
+```
+
+### Step 3: Create Annotated Tag
+
+```bash
+git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
+```
+
+**Tag message format:** `vX.Y.Z - One-line summary`
+
+### Step 4: Push Commits and Tag
+
+```bash
+git push origin main
+git push origin vX.Y.Z
+```
+
+### Step 5: Create GitHub Release
+
+Using GitHub API:
+
+```bash
+curl -X POST \
+  -H "Authorization: token $GITHUB_TOKEN" \
+  -H "Accept: application/vnd.github.v3+json" \
+  https://api.github.com/repos/OWNER/REPO/releases \
+  -d '{
+    "tag_name": "vX.Y.Z",
+    "name": "vX.Y.Z - Release Title",
+    "body": "[CHANGELOG content for this version]",
+    "draft": false
+  }'
+```
+
+Or direct user to GitHub UI:
+
+```
+Tag vX.Y.Z pushed. Create release at:
+https://github.com/OWNER/REPO/releases/new
+
+Select tag: vX.Y.Z
+Title: vX.Y.Z - Brief description
+Copy CHANGELOG section as release notes.
+Click "Publish release"
+```
+
+### Step 6: Verify Release
+
+Check that:
+- Release appears at `https://github.com/OWNER/REPO/releases/tag/vX.Y.Z`
+- Source archives (zip/tar) are downloadable
+- Release notes render correctly
+
+## Tag Naming Convention
+
+| Pattern | Example | Use Case |
+|---------|---------|----------|
+| `vMAJOR.MINOR.PATCH` | v1.2.3 | Stable release |
+| `vMAJOR.MINOR.PATCH-rc.N` | v1.2.0-rc.1 | Release candidate |
+| `vMAJOR.MINOR.PATCH-beta.N` | v1.2.0-beta.1 | Beta testing |
+| `vMAJOR.MINOR.PATCH-alpha.N` | v1.2.0-alpha.1 | Early development |
+
+**Format:** Always prefix with `v`, use lowercase for prerelease suffix.
+
+## Post-Release Verification
+
+After publishing:
+
+1. Check release URL is accessible
+2. Download links work (zipball/tarball)
+3. CHANGELOG version header matches tag
+4. Ask user: "Release published. Anything else?"
+
+## Quick Reference
+
+| Step | Command | Purpose |
+|------|---------|---------|
+| 1 | `git status` | Verify clean tree |
+| 2 | `<test command>` | Verify tests pass |
+| 3 | `grep CHANGELOG` | Verify docs updated |
+| 4 | `git tag -a` | Create tag |
+| 5 | `git push --tags` | Publish tag |
+| 6 | GitHub API | Create release |
+
+## Common Mistakes
+
+**Releasing with dirty tree**
+- **Problem:** Uncommitted changes not included in release
+- **Fix:** Always verify `git status` first
+
+**Skipping CHANGELOG**
+- **Problem:** Release notes empty or outdated
+- **Fix:** Make CHANGELOG check mandatory
+
+**Wrong version number**
+- **Problem:** Breaking change released as PATCH
+- **Fix:** Use version decision flow, confirm with user
+
+**Tag without release**
+- **Problem:** Users can't find release notes
+- **Fix:** Always create GitHub release after tag
+
+## Red Flags
+
+**Never:**
+- Release with failing tests
+- Release with dirty working tree
+- Skip CHANGELOG update
+- Force-push tags (unless explicitly requested)
+- Delete tags without user confirmation
+
+**Always:**
+- Run pre-release checklist
+- Confirm version with user
+- Create GitHub release (not just tag)
+- Verify release after publishing
+
+## Integration
+
+**Can be called by:**
+- `finishing-a-development-branch` (Option 5: Create Release)
+- Directly when user says "create a release" or "do a release"
+
+**Sequence after finishing-a-development-branch:**
+1. Merge completes → Option 5 selected
+2. Invoke releasing skill
+3. Complete release workflow
+4. Return to cleanup worktree
