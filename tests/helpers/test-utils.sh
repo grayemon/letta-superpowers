@@ -10,10 +10,62 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Log file setup (relative to tests/ directory)
+UTILS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOG_FILE="$UTILS_DIR/../test-results.log"
+LOG_CLOSED=false
+
 # Test counters
 TESTS_RUN=0
 TESTS_PASSED=0
 TESTS_FAILED=0
+
+# Write timestamped message to log file and console
+# Usage: log "LEVEL" "message"
+log() {
+    local level="$1"
+    local message="$2"
+    
+    # Don't log after end_log is called
+    if [[ "$LOG_CLOSED" == "true" ]]; then
+        return
+    fi
+    
+    local timestamp
+    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] [$level] $message" >> "$LOG_FILE"
+}
+
+# Initialize log file with header
+start_log() {
+    # Create/clear log file
+    mkdir -p "$(dirname "$LOG_FILE")" 2>/dev/null || true
+    echo "" > "$LOG_FILE"
+    
+    local start_time
+    start_time=$(date '+%Y-%m-%d %H:%M:%S')
+    
+    {
+        echo "====================================="
+        echo "TEST RUN: $start_time"
+        echo "====================================="
+    } >> "$LOG_FILE"
+}
+
+# Finalize log file with summary footer
+end_log() {
+    LOG_CLOSED=true
+    
+    {
+        echo "====================================="
+        echo "TEST SUMMARY"
+        echo "====================================="
+        echo "Tests run: $TESTS_RUN"
+        echo "Tests passed: $TESTS_PASSED"
+        echo "Tests failed: $TESTS_FAILED"
+        echo "====================================="
+    } >> "$LOG_FILE"
+}
 
 # Server state (set by start_brainstorm_server)
 SERVER_URL=""
@@ -25,19 +77,27 @@ SERVER_PID=""
 # Log test result
 pass() {
     echo -e "${GREEN}✓ PASS${NC}: $1"
+    log "PASS" "$1"
     TESTS_PASSED=$((TESTS_PASSED + 1))
 }
 
 fail() {
-    echo -e "${RED}✗ FAIL${NC}: $1"
-    if [[ -n "${2:-}" ]]; then
-        echo "  Details: $2"
+    local message="$1"
+    local details="${2:-}"
+    
+    echo -e "${RED}✗ FAIL${NC}: $message"
+    if [[ -n "$details" ]]; then
+        echo "  Details: $details"
+        log "FAIL" "$message - $details"
+    else
+        log "FAIL" "$message"
     fi
     TESTS_FAILED=$((TESTS_FAILED + 1))
 }
 
 info() {
     echo -e "${YELLOW}ℹ INFO${NC}: $1"
+    log "INFO" "$1"
 }
 
 # Start brainstorm server and capture output

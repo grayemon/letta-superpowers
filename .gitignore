@@ -9,3 +9,7 @@ node_modules/
 inspo
 triage/
 **/diagrams/
+
+# Test output logs
+tests/*.log
+tests/test-results.log

@@ -19,6 +19,9 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 # Source test utilities
 source "$SCRIPT_DIR/helpers/test-utils.sh"
 
+# Start test logging
+start_log
+
 # Parse arguments
 PROJECT_DIR=""
 while [[ $# -gt 0 ]]; do
@@ -191,4 +194,5 @@ fi
 # ========================================
 # Summary
 # ========================================
+end_log
 print_summary
