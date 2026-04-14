@@ -2,6 +2,23 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [v1.2.0] - 2026-04-15
+
+### Added
+- **Continue button** to Visual Companion: Users click to confirm selection instead of returning to terminal
+- **Automated test suite** for Visual Companion (`tests/` directory)
+- **Test logging** with clean audit trail (`tests/test-results.log`)
+- `wait_for_done()` pattern in visual-companion.md for blocking until user confirms
+
+### Changed
+- Continue button appears automatically when user makes a selection
+- Button sends `{"type":"done"}` event with final selection
+- Users can change selection multiple times before clicking Continue
+- Updated visual-companion.md with new workflow documentation
+
+### Fixed
+- Server binds to 0.0.0.0 when needed for WSL/Windows accessibility
+
 ## [v1.1.0] - 2026-04-13
 
 ### Added
