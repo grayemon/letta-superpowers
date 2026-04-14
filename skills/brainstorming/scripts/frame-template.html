@@ -82,7 +82,7 @@
     .indicator-bar {
       background: var(--bg-secondary);
       border-top: 1px solid var(--border);
-      padding: 0.5rem 1.5rem;
+      padding: 0.75rem 1.5rem;
       flex-shrink: 0;
       text-align: center;
     }
@@ -93,6 +93,30 @@
     .indicator-bar .selected-text {
       color: var(--accent);
       font-weight: 500;
+    }
+
+    /* ===== CONTINUE BUTTON ===== */
+    .continue-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: none;
+      margin: 0 auto;
+    }
+    .continue-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .continue-btn:active { transform: translateY(0); }
+    .continue-btn.visible { display: inline-block; }
+    .continue-btn:disabled {
+      background: var(--bg-tertiary);
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+      transform: none;
     }
 
     /* ===== TYPOGRAPHY ===== */
@@ -207,7 +231,8 @@
   </div>
 
   <div class="indicator-bar">
-    <span id="indicator-text">Click an option above, then return to the terminal</span>
+    <span id="indicator-text">Click an option above</span>
+    <button id="continue-btn" class="continue-btn" type="button">Continue</button>
   </div>
 
 </body>

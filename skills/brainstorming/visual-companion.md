@@ -7,8 +7,9 @@ A browser-based companion for showing mockups, diagrams, and visual options duri
 1. **Start the server** via Bash tool
 2. **User opens URL** in their browser
 3. **Agent pushes content** to the browser via file system
-4. **User clicks choices** and returns to terminal
-5. **Agent reads selection** from server state
+4. **User clicks choices** → Continue button appears
+5. **User clicks Continue** → Agent receives "done" event
+6. **Agent reads selection** from server state
 
 ## Starting the Server
 
@@ -59,9 +60,54 @@ EOF
 
 The browser auto-reloads when new files are written.
 
-## Reading User Selection
+## Waiting for User Selection
 
-Read the state file to get the user's choice:
+The Continue button appears automatically when user makes a selection. Use `wait_for_done` to block until the user clicks Continue:
+
+```bash
+# Wait for user to click Continue (polls events file)
+# Usage: wait_for_done "$STATE_DIR"
+wait_for_done() {
+    local state_dir="$1"
+    local events_file="$state_dir/events"
+    local timeout=300  # 5 minutes
+    local elapsed=0
+    
+    while [[ $elapsed -lt $timeout ]]; do
+        if [[ -f "$events_file" ]]; then
+            local last_event
+            last_event=$(tail -1 "$events_file" 2>/dev/null)
+            if echo "$last_event" | grep -q '"type":"done"'; then
+                echo "$last_event"
+                return 0
+            fi
+        fi
+        sleep 1
+        ((elapsed++))
+    done
+    
+    echo '{"error": "timeout waiting for user selection"}'
+    return 1
+}
+
+# Usage:
+selection=$(wait_for_done "$STATE_DIR")
+```
+
+**Event format:**
+```json
+{
+  "type": "done",
+  "choice": "microservices",
+  "selections": ["microservices"],
+  "text": "Microservices",
+  "timestamp": 1712345678901
+}
+```
+
+## Reading User Selection (Legacy)
+
+For backward compatibility, you can still read click events directly:
 
 ```bash
 # Read the latest click event
@@ -150,11 +196,9 @@ The frame template provides pre-styled components:
 ## Complete Example
 
 **1. Start server:**
-```typescript
-Bash({
-  command: "cd /path/to/project && ./skills/brainstorming/scripts/start-server.sh --project-dir $(pwd)",
-  description: "Start brainstorm visual companion server"
-})
+```bash
+cd /path/to/project && ./skills/brainstorming/scripts/start-server.sh --project-dir $(pwd)
+# Parse output to get SERVER_URL, SCREEN_DIR, STATE_DIR, SESSION_DIR
 ```
 
 **2. Tell user to open URL:**
@@ -162,48 +206,41 @@ Bash({
 
 **3. Push content:**
 ```bash
-Bash({
-  command: "cat > $SCREEN_DIR/01-approach.html << 'EOF'
+cat > "$SCREEN_DIR/01-approach.html" << 'EOF'
 <h2>Choose your architecture</h2>
-<p class=\"subtitle\">Which approach fits your needs?</p>
-<div class=\"options\">
-  <div class=\"option\" data-choice=\"microservices\" onclick=\"toggleSelect(this)\">
-    <div class=\"letter\">A</div>
-    <div class=\"content\">
+<p class="subtitle">Which approach fits your needs?</p>
+<div class="options">
+  <div class="option" data-choice="microservices" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
       <h3>Microservices</h3>
       <p>Independent services, maximum flexibility, complex ops</p>
     </div>
   </div>
-  <div class=\"option\" data-choice=\"monolith\" onclick=\"toggleSelect(this)\">
-    <div class=\"letter\">B</div>
-    <div class=\"content\">
+  <div class="option" data-choice="monolith" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
       <h3>Modular Monolith</h3>
       <p>Simpler deployment, easier development, less flexibility</p>
     </div>
   </div>
 </div>
-EOF",
-  description: "Push architecture options to visual companion"
-})
+EOF
 ```
 
-**4. Wait for user:**
-> "Click your choice in the browser, then return here and type 'done'."
-
-**5. Read selection:**
+**4. Wait for selection (polls until user clicks Continue):**
 ```bash
-Bash({
-  command: "tail -1 $STATE_DIR/events",
-  description: "Read user's visual companion selection"
-})
+# Block until user clicks Continue button
+selection=$(wait_for_done "$STATE_DIR")
+
+# Parse the result
+choice=$(echo "$selection" | grep -o '"choice":"[^"]*"' | cut -d'"' -f4)
+echo "User chose: $choice"
 ```
 
-**6. Stop server (optional):**
+**5. Stop server (optional):**
 ```bash
-Bash({
-  command: "./skills/brainstorming/scripts/stop-server.sh \"$SESSION_DIR\"",
-  description: "Stop brainstorm visual companion server"
-})
+./skills/brainstorming/scripts/stop-server.sh "$SESSION_DIR"
 ```
 
 ## Tips
@@ -213,3 +250,4 @@ Bash({
 - **Clean up** - Stop the server when done if using /tmp
 - **Persist sessions** - Use --project-dir for important sessions
 - **Auto-reload** - Browser reloads when you write new files
+- **Continue button** - Appears automatically when user makes a selection
