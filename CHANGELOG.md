@@ -2,6 +2,14 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [v1.2.1] - 2026-04-15
+
+### Changed
+- **Built-in skill overlap** guidance rewritten with detailed example scenarios
+- CORRECT vs WRONG paths for each overlapping skill
+- Quick reference table for fast disambiguation
+- Covers: `skill-authoring-tdd`, `using-git-worktrees`, `dispatching-parallel-agents`
+
 ## [v1.2.0] - 2026-04-15
 
 ### Added
