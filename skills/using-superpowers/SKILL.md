@@ -143,13 +143,96 @@ The superpowers workflow is a strict sequential chain:
 
 ## Built-in Skill Overlap
 
-Letta Code has built-in skills with similar purposes. Use these guidelines:
+Letta Code has built-in skills with similar purposes. Use these example scenarios to disambiguate:
 
-| Overlap | Use This | Why |
-|---------|----------|-----|
-| Creating skills | `skill-authoring-tdd` | TDD methodology for skill verification. Built-in `creating-skills` is for structure/packaging. |
-| Git worktrees | `using-git-worktrees` | Canonical workflow step 2. Built-in `working-in-parallel` is an alternative with different directory convention. |
-| Parallel dispatch | `dispatching-parallel-agents` | For internal Task subagents. Built-in `dispatching-coding-agents` is for external CLIs (`claude`, `codex`) — different purpose, no conflict. |
+### Creating Skills
+
+**Scenario:** User says "create a new skill for X" or "write a skill that does Y"
+
+| ✅ CORRECT | ❌ WRONG |
+|------------|----------|
+| `/skill-authoring-tdd` | Built-in `/creating-skills` |
+| **Why:** TDD methodology ensures skills work before using. Includes testing pattern with subagents. | **Why NOT:** Built-in skill only covers structure/packaging. No testing methodology. Skills may break in production. |
+
+**Example:**
+```
+User: "Create a skill for deploying to AWS"
+
+CORRECT path:
+1. Load /skill-authoring-tdd
+2. Design skill with brainstorming
+3. Write skill with tests
+4. Test skill with subagent
+5. Verify before release
+
+WRONG path:
+1. Load /creating-skills (built-in)
+2. Create skeleton
+3. No testing
+4. Skill may break when user tries it
+```
+
+---
+
+### Git Worktrees
+
+**Scenario:** Need to work on multiple features in parallel without conflicts
+
+| ✅ CORRECT | ❌ WRONG |
+|------------|----------|
+| `/using-git-worktrees` | Built-in `/working-in-parallel` |
+| **Why:** Canonical workflow step 2. Creates isolated worktrees with proper branch naming. | **Why NOT:** Built-in skill uses different directory convention, breaks superpowers workflow chain. |
+
+**Example:**
+```
+User: "I need to work on feature A and feature B at the same time"
+
+CORRECT path:
+1. Load /using-git-worktrees
+2. Create worktree for feature-a
+3. Create worktree for feature-b
+4. Work independently in each
+5. Merge/cleanup following canonical workflow
+
+WRONG path:
+1. Load /working-in-parallel (built-in)
+2. Different conventions, different directory structure
+3. Breaks integration with other superpowers skills
+```
+
+---
+
+### Parallel Dispatch
+
+**Scenario:** Need to run multiple independent tasks simultaneously
+
+| ✅ CORRECT | ✅ ALSO CORRECT |
+|------------|-----------------|
+| `/dispatching-parallel-agents` | Built-in `/dispatching-coding-agents` |
+| **Use when:** Dispatching to Letta Code Task subagents | **Use when:** Dispatching to external CLI tools |
+
+**No conflict** — they serve different purposes:
+
+```
+Scenario A: Parallel Letta subagents
+User: "Run two explore subagents to search codebase"
+→ Use /dispatching-parallel-agents (Task tool with subagent_type)
+
+Scenario B: External coding tools
+User: "Get a second opinion from Claude CLI"
+→ Use /dispatching-coding-agents (spawns external `claude` or `codex` processes)
+```
+
+---
+
+### Quick Reference
+
+| Trigger | Use This Skill | NOT This |
+|---------|---------------|-----------|
+| "Create/write a skill" | `skill-authoring-tdd` | `creating-skills` |
+| "Work on multiple features" | `using-git-worktrees` | `working-in-parallel` |
+| "Parallel Letta subagents" | `dispatching-parallel-agents` | (no conflict) |
+| "External Claude/Codex" | `dispatching-coding-agents` | (no conflict) |
 
 ## Skill Types
 
