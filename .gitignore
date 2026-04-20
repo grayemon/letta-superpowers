@@ -4,7 +4,7 @@
 docs/
 .claude/
 .letta/
-.skills/
+.skills
 .DS_Store
 node_modules/
 inspo
