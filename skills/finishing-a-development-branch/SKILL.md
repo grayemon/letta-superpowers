@@ -20,8 +20,11 @@ Guide completion of development work by presenting clear options and handling ch
 **Before presenting options, verify tests pass:**
 
 ```bash
-# Run project's test suite
-npm test / cargo test / pytest / go test ./...
+# Run the project's test suite (use appropriate command)
+npm test
+# or: cargo test
+# or: pytest
+# or: go test ./...
 ```
 
 **If tests fail:**

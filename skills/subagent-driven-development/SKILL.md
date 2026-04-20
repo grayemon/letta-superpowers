@@ -285,7 +285,7 @@ Done!
 
 **Subagents should use:**
 
-- **test-driven-development** - Subagents follow TDD for each task
+- **test-driven-development** (TDD) - Subagents follow TDD for each task
 
 **Alternative workflow:**
 

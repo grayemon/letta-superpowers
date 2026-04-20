@@ -91,12 +91,55 @@ These thoughts mean STOP—you're rationalizing:
 When multiple skills could apply, use this order:
 
 1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
-2. **Implementation skills second** (test-driven-development, systematic-debugging) - these guide execution
+2. **Implementation skills second** (test-driven-development (TDD), systematic-debugging) - these guide execution
 3. **Completion skills last** (finishing-a-development-branch, releasing) - these finalize work
 
 "Let's build X" → brainstorming first, then implementation skills.
 "Fix this bug" → debugging first, then domain-specific skills.
 "Done with feature" → finishing-a-development-branch, optionally releasing.
+
+## Skill Decision Ladder
+
+Go through these questions in order. Pick the **first match**:
+
+```
+1. Is this a bug, test failure, or unexpected behavior?
+   └─ YES → systematic-debugging (find root cause first)
+   
+2. Is this a new feature, behavior change, or creative work?
+   └─ YES → brainstorming (design before implementation)
+   
+3. Do you have an approved spec/design and need a workspace?
+   └─ YES → using-git-worktrees (isolate from main)
+   
+4. Do you have a spec and need to break it into tasks?
+   └─ YES → writing-plans (create implementation plan)
+   
+5. Do you have a plan and need to implement it?
+   ├─ SAME SESSION + subagents available?
+   │  └─ YES → subagent-driven-development
+   └─ SEPARATE SESSION or no subagents?
+      └─ YES → executing-plans
+
+6. Are there 2+ independent issues (no shared state)?
+   └─ YES → dispatching-parallel-agents (parallelize investigation)
+
+7. Are you implementing any feature or bugfix?
+   └─ YES → test-driven-development (TDD) (RED-GREEN-REFACTOR)
+
+8. Is implementation complete and tests pass?
+   └─ YES → finishing-a-development-branch (choose merge/PR/keep)
+
+9. Creating a new release or tag?
+   └─ YES → releasing (version, changelog, GitHub release)
+```
+
+**Key disambiguations:**
+- `systematic-debugging` BEFORE `test-driven-development` for bugs (diagnose first)
+- `brainstorming` BEFORE `writing-plans` for features (design first)
+- `using-git-worktrees` BEFORE execution skills (workspace setup)
+- `subagent-driven-development` for same-session plan execution
+- `executing-plans` for separate-session or no-subagent environments
 
 ## Canonical Skill Sequence
 
@@ -106,7 +149,7 @@ The superpowers workflow is a strict sequential chain:
 2. **using-git-worktrees** → Isolated workspace (requires design approval)
 3. **writing-plans** → Break into 2-5 min tasks, outputs `docs/plans/*.md`
 4. **executing-plans** OR **subagent-driven-development** → Implement tasks
-5. **test-driven-development** → RED-GREEN-REFACTOR (used throughout)
+5. **test-driven-development** (TDD) → RED-GREEN-REFACTOR (used throughout)
 6. **requesting-code-review** → Quality gate
 7. **finishing-a-development-branch** → Merge/PR/keep decision
 8. **releasing** → (Optional) Semantic versioning, changelog

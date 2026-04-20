@@ -15,7 +15,7 @@ You write test cases (pressure scenarios with subagents), watch them fail (basel
 
 **Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill teaches the right thing.
 
-**REQUIRED BACKGROUND:** You MUST understand test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
+**REQUIRED BACKGROUND:** You MUST understand test-driven-development (TDD) before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
 
 **Official guidance:** For skill authoring best practices, see skill-authoring-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
 
@@ -272,7 +272,7 @@ You: I'll search past conversations for React Router authentication patterns.
 
 # ✅ GOOD: Minimal example (20 words)
 
-Partner: "How did we handle auth errors in React Router?"
+Human partner: "How did we handle auth errors in React Router?"
 You: Searching...
 [Dispatch subagent → synthesis]
 ```
@@ -309,7 +309,7 @@ wc -w skills/path/SKILL.md
 
 Use skill name only, with explicit requirement markers:
 
-- ✅ Good: `**REQUIRED SUB-SKILL:** Use test-driven-development`
+- ✅ Good: `**REQUIRED SUB-SKILL:** Use test-driven-development (TDD)`
 - ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand systematic-debugging`
 - ❌ Bad: `See skills/testing/test-driven-development` (unclear if required)
 - ❌ Bad: `@skills/testing/test-driven-development/SKILL.md` (invalid syntax in Letta Code — @ is treated as literal text, not a directive)
@@ -432,7 +432,7 @@ Edit skill without testing? Same violation.
 - Don't "adapt" while running tests
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The test-driven-development skill explains why this matters. Same principles apply to documentation.
+**REQUIRED BACKGROUND:** The test-driven-development (TDD) skill explains why this matters. Same principles apply to documentation.
 
 ## Testing All Skill Types
 
