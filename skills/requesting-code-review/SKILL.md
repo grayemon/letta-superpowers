@@ -58,6 +58,10 @@ Task({
 - Note Minor issues for later
 - Push back if reviewer is wrong (with reasoning)
 
+**4. When receiving external review feedback:**
+
+If someone else reviewed your code (not via this skill), use the receiving-code-review skill for a structured approach to processing feedback.
+
 ## Example
 
 ```

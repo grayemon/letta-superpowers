@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: Use before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores intent, requirements and design before implementation.
 ---
 
 # Brainstorming Ideas Into Designs
@@ -63,7 +63,7 @@ digraph brainstorming {
 }
 ```
 
-**The terminal state is invoking writing-plans.** Do NOT invoke any implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+**The terminal state is invoking writing-plans.** Do NOT invoke any implementation skill. The ONLY skill you invoke after brainstorming is writing-plans. (Note: writing-plans should run in a worktree — see using-git-worktrees skill.)
 
 ## The Process
 
@@ -132,6 +132,7 @@ Wait for the user's response. If they request changes, make them and re-run the 
 **Implementation:**
 
 - Invoke the writing-plans skill to create a detailed implementation plan
+- Note: writing-plans expects to run in an isolated worktree — the using-git-worktrees skill should be used before plan execution
 - Do NOT invoke any other skill. writing-plans is the next step.
 
 ## Key Principles

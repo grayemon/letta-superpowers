@@ -127,10 +127,13 @@ Go through these questions in order. Pick the **first match**:
 7. Are you implementing any feature or bugfix?
    └─ YES → test-driven-development (TDD) (RED-GREEN-REFACTOR)
 
-8. Is implementation complete and tests pass?
+8. Implementation complete? Want quality gate before proceeding?
+   └─ YES → requesting-code-review (optional but recommended)
+
+9. Tests pass and ready to integrate?
    └─ YES → finishing-a-development-branch (choose merge/PR/keep)
 
-9. Creating a new release or tag?
+10. Creating a new release or tag?
    └─ YES → releasing (version, changelog, GitHub release)
 ```
 
@@ -140,6 +143,8 @@ Go through these questions in order. Pick the **first match**:
 - `using-git-worktrees` BEFORE execution skills (workspace setup)
 - `subagent-driven-development` for same-session plan execution
 - `executing-plans` for separate-session or no-subagent environments
+- `requesting-code-review` BEFORE `finishing-a-development-branch` for quality gate
+- `receiving-code-review` when processing external review feedback
 
 ## Canonical Skill Sequence
 
@@ -162,6 +167,7 @@ The superpowers workflow is a strict sequential chain:
 | "Fix bug" / "Tests failing" | systematic-debugging | TDD to fix |
 | "Design approved, ready to code" | using-git-worktrees | writing-plans |
 | "Have plan, implement it" | subagent-driven-development | (or executing-plans) |
+| "Want review before merge" | requesting-code-review | receiving-code-review (if external feedback) |
 | "Tests pass, what next?" | finishing-a-development-branch | releasing (optional) |
 | "Multiple independent failures" | dispatching-parallel-agents | Then debug each |
 
