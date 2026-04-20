@@ -1,13 +1,24 @@
 #!/usr/bin/env bash
 # Bisection script to find which test creates unwanted files/state
 # Usage: ./find-polluter.sh <file_or_dir_to_check> <test_pattern>
-# Example: ./find-polluter.sh '.git' 'src/**/*.test.ts'
+# Example: ./find-polluter.sh '.git' '*/src/**/*.test.ts'
+#
+# NOTE: The test_pattern uses find -path syntax, NOT shell globs:
+#   - Use '*/pattern' to match any path containing pattern
+#   - Use '*/*.test.ts' to match files ending in .test.ts anywhere
+#   - NOT shell globs: 'src/**/*.test.ts' won't work
+#   - Instead use: '*/src/*/*.test.ts' or '*/*.test.ts'
 
 set -e
 
 if [ $# -ne 2 ]; then
   echo "Usage: $0 <file_to_check> <test_pattern>"
-  echo "Example: $0 '.git' 'src/**/*.test.ts'"
+  echo ""
+  echo "Pattern syntax (find -path, NOT shell globs):"
+  echo "  '*/*.test.ts'     - Match .test.ts files anywhere"
+  echo "  '*/src/*/*.ts'     - Match .ts files in src directory"
+  echo ""
+  echo "Example: $0 '.git' '*/*.test.ts'"
   exit 1
 fi
 

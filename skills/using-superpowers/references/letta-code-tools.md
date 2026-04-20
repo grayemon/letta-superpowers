@@ -7,10 +7,14 @@ Tool names and syntax for Superpowers skills in Letta Code.
 | Tool | Behavior |
 |------|----------|
 | Task | Dispatch subagent with structured params: `subagent_type`, `description`, `prompt`, `model` |
+| TaskOutput | Retrieve output from background tasks: `task_id`, `block`, `timeout` |
+| TaskStop | Stop a running background task: `task_id` |
 | TodoWrite | Track task progress |
 | Skill | Invoke a skill |
+| AskUserQuestion | Ask user for clarification: `questions` array with options |
 | Read, Write, Edit, Bash, Grep, Glob | Standard file/shell operations |
 | EnterPlanMode / ExitPlanMode | Plan mode workflow |
+| memory | Modify agent memory files: `command`, `file_path`, `reason` |
 
 ## Subagent Types
 
