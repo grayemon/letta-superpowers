@@ -192,7 +192,7 @@ git worktree remove <worktree-path>
 **Open-ended questions**
 
 - **Problem:** "What should I do next?" → ambiguous
-- **Fix:** Present exactly 4 structured options
+- **Fix:** Present exactly 5 structured options
 
 **Automatic worktree cleanup**
 
@@ -216,7 +216,7 @@ git worktree remove <worktree-path>
 **Always:**
 
 - Verify tests before offering options
-- Present exactly 4 options
+- Present exactly 5 options
 - Get typed confirmation for Option 4
 - Clean up worktree for Options 1 & 4 only
 
