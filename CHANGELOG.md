@@ -2,6 +2,26 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [v1.2.2] - 2026-04-20
+
+### Fixed
+- **Template variable mismatch** in requesting-code-review (aligned `PLAN_REFERENCE` to `PLAN_OR_REQUIREMENTS`)
+- **Skill description format** in brainstorming to use "Use when..." convention
+- **Path style inconsistency** in brainstorming (absolute → relative path)
+- **find-polluter.sh** now documents `find -path` syntax (not shell globs)
+- **Worktree handoff** in brainstorming now documented (fixes upstream obra/superpowers inconsistency)
+- **Decision ladder** now includes review step (step 8) and review skills in disambiguations
+- **Orphaned receiving-code-review** now linked from requesting-code-review
+
+### Changed
+- **using-superpowers decision ladder** expanded from 9 to 10 steps
+- **letta-code-tools.md** reference updated with missing tools (TaskOutput, TaskStop, AskUserQuestion, memory)
+
+### Added
+- **Symlink setup** for `.skills/` → `skills/` (single source of truth)
+- **FUTURE-SKILLS.md** documenting 8 identified workflow gaps for future development
+- **Requesting/receiving-code-review** integration documented in "Which Skill to Use?" table
+
 ## [v1.2.1] - 2026-04-15
 
 ### Changed
