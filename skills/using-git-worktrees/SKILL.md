@@ -214,7 +214,7 @@ Ready to implement auth feature
 
 **Called by:**
 
-- **brainstorming** (after user approves design) - REQUIRED when design is approved and implementation follows
+- **writing-plans** - REQUIRED before creating implementation plan
 - **subagent-driven-development** - REQUIRED before executing any tasks
 - **executing-plans** - REQUIRED before executing any tasks
 - Any skill needing isolated workspace

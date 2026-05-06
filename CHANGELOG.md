@@ -2,6 +2,20 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- **Git hooks** to prevent accidental commits to main/master branches (`pre-commit` hook in `.githooks/`)
+- **Setup script** for one-time git hooks installation (`skills/using-superpowers/scripts/setup-git-hooks.sh`)
+- **First-run setup** section in using-superpowers skill for automatic hook installation
+- **Test suite** for git hooks (`tests/test-git-hooks.sh`)
+- **Diff review step** in finishing-a-development-branch (Step 3) — review full diff before presenting merge/PR options
+- **GitHub milestone integration** — optional milestone creation and issue filing in writing-plans, `--milestone` flag on PR creation in finishing-a-development-branch, milestone close step in releasing
+
+### Changed
+- **finishing-a-development-branch** process expanded from 5 to 6 steps (added diff review between base branch detection and option presentation)
+- **releasing** process expanded from 6 to 7 steps (added milestone close after release verification)
+
 ## [v1.2.2] - 2026-04-20
 
 ### Fixed
