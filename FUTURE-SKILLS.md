@@ -24,19 +24,8 @@ Identified gaps from the letta-superpowers skillset audit (2026-04-20).
 
 ---
 
-### 2. `merge-conflict-resolution`
-**Workflow:** Handle merge conflicts properly
-
-**Coverage Gap:**
-- `finishing-a-development-branch` includes merge steps and a diff review step (Step 3) that catches cross-task conflicts before merging
-- Missing: Full merge conflict resolution process (rebase vs merge, conflict markers, resolution strategy)
-
-**Use Cases:**
-- Rebase vs merge guidance
-- Conflict resolution strategy
-- Rerun tests after resolving
-- Preserving intent across branches
-- When to ask for help
+### 2. `merge-conflict-resolution` ✅ IMPLEMENTED
+**Status:** Implemented. See `skills/merge-conflict-resolution/SKILL.md`.
 
 ---
 

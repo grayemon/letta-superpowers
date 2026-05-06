@@ -2,6 +2,13 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- **merge-conflict-resolution** skill — classifies merge conflicts by type (both-modified, delete/modify, generated, semantic), applies per-type resolution strategies, auto-resolves clear cases, escalates ambiguous ones
+- **finishing-a-development-branch** now references merge-conflict-resolution when merge produces conflicts
+- **using-superpowers** decision ladder updated with merge-conflict-resolution entry
+
 ## [v1.4.0] - 2026-05-06
 
 ### Added

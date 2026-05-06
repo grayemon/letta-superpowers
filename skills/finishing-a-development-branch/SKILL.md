@@ -137,6 +137,10 @@ git pull
 # Merge feature branch
 git merge <feature-branch>
 
+# If merge produces conflicts:
+#   → Invoke merge-conflict-resolution skill
+#   → Then continue with test verification
+
 # Verify tests on merged result
 <test command>
 ```
