@@ -1,8 +1,16 @@
-# Changelog
+# Release Notes
 
-All notable changes to this Letta Code adaptation will be documented in this file.
+## [Unreleased]
 
-## [v1.5.0] - 2026-05-06
+### Changed
+- **Releasing skill** now detects the release notes file dynamically (RELEASE-NOTES.md or CHANGELOG.md) instead of hardcoding CHANGELOG.md
+- **Releasing skill** bootstraps RELEASE-NOTES.md for new projects that don't have one yet
+- **Finishing-a-development-branch** post-merge check now detects the release notes file instead of hardcoding CHANGELOG.md
+
+### Removed
+- **CHANGELOG.md** removed in favor of RELEASE-NOTES.md (aligns with upstream obra/superpowers convention)
+
+## v1.5.0 (2026-05-06)
 
 ### Added
 - **merge-conflict-resolution** skill — classifies merge conflicts by type (both-modified, delete/modify, generated, semantic), applies per-type resolution strategies, auto-resolves clear cases, escalates ambiguous ones
@@ -12,7 +20,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 ### Fixed
 - **finishing-a-development-branch** Option 2 now has post-merge follow-up step (pull main, clean up, offer to release)
 
-## [v1.4.0] - 2026-05-06
+## v1.4.0 (2026-05-06)
 
 ### Added
 - **Environment detection** in using-git-worktrees (Step 0) — detects if already in a linked worktree and skips creation; includes submodule guard
@@ -29,7 +37,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 - **finishing-a-development-branch** process expanded from 6 to 7 steps (added environment detection between test verification and base branch detection)
 - **finishing-a-development-branch** core principle updated to: "Verify tests → Detect environment → Review diff → Present options → Execute choice → Clean up"
 
-## [v1.3.0] - 2026-05-06
+## v1.3.0 (2026-05-06)
 
 ### Added
 - **Git hooks** to prevent accidental commits to main/master branches (`pre-commit` hook in `.githooks/`)
@@ -52,7 +60,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 - **Executable bit** on .githooks/pre-commit not preserved by git
 - **.gitattributes** missing .githooks/* rule for LF enforcement; file had CRLF line endings
 
-## [v1.2.2] - 2026-04-20
+## v1.2.2 (2026-04-20)
 
 ### Fixed
 - **Template variable mismatch** in requesting-code-review (aligned `PLAN_REFERENCE` to `PLAN_OR_REQUIREMENTS`)
@@ -72,7 +80,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 - **FUTURE-SKILLS.md** documenting 8 identified workflow gaps for future development
 - **Requesting/receiving-code-review** integration documented in "Which Skill to Use?" table
 
-## [v1.2.1] - 2026-04-15
+## v1.2.1 (2026-04-15)
 
 ### Changed
 - **Built-in skill overlap** guidance rewritten with detailed example scenarios
@@ -80,7 +88,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 - Quick reference table for fast disambiguation
 - Covers: `skill-authoring-tdd`, `using-git-worktrees`, `dispatching-parallel-agents`
 
-## [v1.2.0] - 2026-04-15
+## v1.2.0 (2026-04-15)
 
 ### Added
 - **Continue button** to Visual Companion: Users click to confirm selection instead of returning to terminal
@@ -97,7 +105,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 ### Fixed
 - Server binds to 0.0.0.0 when needed for WSL/Windows accessibility
 
-## [v1.1.0] - 2026-04-13
+## v1.1.0 (2026-04-13)
 
 ### Added
 - **Canonical Skill Sequence** to `using-superpowers/SKILL.md`: 8-step workflow chain (brainstorming → worktrees → plans → execute → review → finish → release)
@@ -114,7 +122,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 ### Fixed
 - Normalized line endings to LF (enforced by .gitattributes)
 
-## [v1.0.2] - 2026-04-13
+## v1.0.2 (2026-04-13)
 
 ### Fixed
 - visual-companion.md: Changed `latest-click.json` → `tail -1 $STATE_DIR/events` (server writes NDJSON)
@@ -128,7 +136,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 ### Impact
 - Full brainstorming workflow (start server → push content → read selection → stop server) now works end-to-end
 
-## [v1.0.1] - 2026-04-13
+## v1.0.1 (2026-04-13)
 
 ### Fixed
 - Removed incorrect `run_in_background: true` from visual-companion.md (start-server.sh handles backgrounding via nohup)
@@ -139,7 +147,7 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 ### Changed
 - Updated Known Limitations: Visual Companion server runs independently via nohup (not subject to 120s timeout)
 
-## [v1.0.0] - 2026-04-13
+## v1.0.0 (2026-04-13)
 
 First stable release of Letta Code adaptation.
 

@@ -1,6 +1,6 @@
 ---
 name: releasing
-description: Use when creating a new release or tag — ensures pre-release checklist passes, CHANGELOG updated, proper versioning, and GitHub release created correctly
+description: Use when creating a new release or tag — ensures pre-release checklist passes, release notes updated, proper versioning, and GitHub release created correctly
 ---
 
 # Releasing
@@ -12,6 +12,35 @@ Create releases with proper versioning, documentation, and verification. Ensures
 **Core principle:** Verify → Document → Tag → Publish → Verify.
 
 **Announce at start:** "I'm using the releasing skill to create a new release."
+
+## Detect Release Notes File
+
+The releasing skill works with whatever release notes file the project uses. Detect it at the start:
+
+```bash
+if [ -f RELEASE-NOTES.md ]; then
+  RELEASE_FILE="RELEASE-NOTES.md"
+elif [ -f CHANGELOG.md ]; then
+  RELEASE_FILE="CHANGELOG.md"
+else
+  RELEASE_FILE="RELEASE-NOTES.md"  # default for new projects
+fi
+```
+
+All subsequent commands reference `$RELEASE_FILE` instead of a hardcoded filename.
+
+**If neither file exists** (new project), bootstrap the file:
+
+```bash
+cat > RELEASE-NOTES.md << 'EOF'
+# Release Notes
+
+## [Unreleased]
+
+EOF
+```
+
+Then add the first version header (see Step 1).
 
 ## Pre-Release Checklist
 
@@ -46,22 +75,22 @@ npm test / cargo test / pytest / go test ./...
 
 **If no tests:** Note in release process, proceed.
 
-### 3. CHANGELOG Updated
+### 3. Release Notes Updated
 
 ```bash
-grep -E "^\#\# \[v[0-9]" CHANGELOG.md | head -1
+grep -E "^## v[0-9]|^## \[v[0-9]" "$RELEASE_FILE" | head -1
 ```
 
 **MUST contain:** Version number matching the planned release.
 
 **If missing:**
 ```
-CHANGELOG.md missing vX.Y.Z section.
+$RELEASE_FILE missing vX.Y.Z section.
 
-Add changelog entry before releasing.
+Add release notes entry before releasing.
 ```
 
-Stop. Update CHANGELOG first.
+Stop. Update release notes first.
 
 ### 4. Version Decision
 
@@ -100,7 +129,7 @@ Ask user to confirm version number:
 ```
 Based on the changes, this should be vX.Y.Z (PATCH/MINOR/MAJOR).
 
-CHANGELOG shows version: [grep result]
+Release notes show version: [grep result]
 
 Is this correct?
 ```
@@ -109,11 +138,11 @@ Wait for confirmation.
 
 ### Step 2: Final Commit (if needed)
 
-If CHANGELOG was just updated:
+If release notes were just updated:
 
 ```bash
-git add CHANGELOG.md
-git commit -m "docs: Update CHANGELOG for vX.Y.Z release
+git add "$RELEASE_FILE"
+git commit -m "docs: Update $RELEASE_FILE for vX.Y.Z release
 
 👾 Generated with [Letta Code](https://letta.com)
 
@@ -137,19 +166,13 @@ git push origin vX.Y.Z
 
 ### Step 5: Create GitHub Release
 
-Using GitHub API:
+Using GitHub CLI:
 
 ```bash
-curl -X POST \
-  -H "Authorization: token $GITHUB_TOKEN" \
-  -H "Accept: application/vnd.github.v3+json" \
-  https://api.github.com/repos/OWNER/REPO/releases \
-  -d '{
-    "tag_name": "vX.Y.Z",
-    "name": "vX.Y.Z - Release Title",
-    "body": "[CHANGELOG content for this version]",
-    "draft": false
-  }'
+gh release create vX.Y.Z --title "vX.Y.Z - Release Title" --notes "$(cat <<'EOF'
+[Release notes content for this version from $RELEASE_FILE]
+EOF
+)"
 ```
 
 Or direct user to GitHub UI:
@@ -160,7 +183,7 @@ https://github.com/OWNER/REPO/releases/new
 
 Select tag: vX.Y.Z
 Title: vX.Y.Z - Brief description
-Copy CHANGELOG section as release notes.
+Copy release notes section as body.
 Click "Publish release"
 ```
 
@@ -207,7 +230,7 @@ After publishing:
 
 1. Check release URL is accessible
 2. Download links work (zipball/tarball)
-3. CHANGELOG version header matches tag
+3. Release notes version header matches tag
 4. Ask user: "Release published. Anything else?"
 
 ## Quick Reference
@@ -218,7 +241,7 @@ After publishing:
 |---|-------|---------|
 | 1 | Clean tree | `git status` |
 | 2 | Tests pass | `<test command>` |
-| 3 | CHANGELOG updated | `grep CHANGELOG` |
+| 3 | Release notes updated | `grep "$RELEASE_FILE"` |
 | 4 | Version confirmed | Ask user |
 
 ### Release Process
@@ -226,10 +249,10 @@ After publishing:
 | Step | Command | Purpose |
 |------|---------|---------|
 | 1 | Confirm version | Ask user to verify |
-| 2 | `git add` + `git commit` | Final CHANGELOG commit |
+| 2 | `git add` + `git commit` | Final release notes commit |
 | 3 | `git tag -a vX.Y.Z` | Create annotated tag |
 | 4 | `git push origin main` + `git push origin vX.Y.Z` | Push commits and tag |
-| 5 | GitHub API or UI | Create release |
+| 5 | `gh release create` or GitHub UI | Create release |
 | 6 | Check release URL | Verify release |
 | 7 | `gh api` PATCH milestone | Close milestone (if applicable) |
 
@@ -239,9 +262,9 @@ After publishing:
 - **Problem:** Uncommitted changes not included in release
 - **Fix:** Always verify `git status` first
 
-**Skipping CHANGELOG**
+**Skipping release notes**
 - **Problem:** Release notes empty or outdated
-- **Fix:** Make CHANGELOG check mandatory
+- **Fix:** Make release notes check mandatory
 
 **Wrong version number**
 - **Problem:** Breaking change released as PATCH
@@ -251,17 +274,22 @@ After publishing:
 - **Problem:** Users can't find release notes
 - **Fix:** Always create GitHub release after tag
 
+**Hardcoded filename**
+- **Problem:** Skill fails on projects using RELEASE-NOTES.md instead of CHANGELOG.md
+- **Fix:** Always detect the release notes file first
+
 ## Red Flags
 
 **Never:**
 - Release with failing tests
 - Release with dirty working tree
-- Skip CHANGELOG update
+- Skip release notes update
 - Force-push tags (unless explicitly requested)
 - Delete tags without user confirmation
 
 **Always:**
 - Run pre-release checklist
+- Detect the release notes file (don't hardcode)
 - Confirm version with user
 - Create GitHub release (not just tag)
 - Verify release after publishing
@@ -269,7 +297,7 @@ After publishing:
 ## Integration
 
 **Can be called by:**
-- `finishing-a-development-branch` (Option 3: Merge and Create Release)
+- `finishing-a-development-branch` (Option 3: Merge and Create Release, post-merge follow-up)
 - Directly when user says "create a release" or "do a release"
 
 **Sequence after finishing-a-development-branch:**

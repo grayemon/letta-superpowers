@@ -184,10 +184,12 @@ git pull
 Then check if a release is warranted:
 
 ```bash
-grep -q "^\#\# \[Unreleased\]" CHANGELOG.md
+# Detect release notes file
+RELEASE_FILE=$(ls RELEASE-NOTES.md CHANGELOG.md 2>/dev/null | head -1)
+grep -q "^\#\# \[Unreleased\]\|^## \[Unreleased\]" "$RELEASE_FILE" 2>/dev/null
 ```
 
-If CHANGELOG has `[Unreleased]` entries, offer to invoke the releasing skill.
+If release notes have `[Unreleased]` entries, offer to invoke the releasing skill.
 
 #### Option 3: Merge and Create Release
 
@@ -200,7 +202,7 @@ I'll now use the releasing skill to create a release.
 
 Follow `skills/releasing/SKILL.md` workflow:
 - Pre-release checklist
-- CHANGELOG verification
+- Release notes verification
 - Tag creation
 - GitHub release
 
