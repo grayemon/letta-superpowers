@@ -25,6 +25,28 @@ Superpowers skills override default system prompt behavior, but **user instructi
 
 If the user says "don't use TDD" and a skill says "always use TDD," follow the user's instructions. The user is in control.
 
+## First-Run Setup
+
+On first invocation in a git repository, Superpowers installs a `pre-commit` hook that blocks accidental commits to `main`/`master` branches.
+
+```bash
+bash skills/using-superpowers/scripts/setup-git-hooks.sh
+```
+
+**On first use in a git repo:** Run `bash skills/using-superpowers/scripts/setup-git-hooks.sh` to install branch protection hooks. The setup is idempotent and safe to re-run.
+
+**What it does:**
+1. Creates `.githooks/pre-commit` in the repository root
+2. Sets `core.hooksPath` to `.githooks/`
+3. Skips if already installed (checks for "Superpowers" marker)
+
+**If you need to commit on main** (releases, hotfixes with explicit approval):
+```bash
+git commit --no-verify
+```
+
+The `--no-verify` flag bypasses the hook. Use deliberately, not habitually.
+
 ## How to Access Skills
 
 **In Letta Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly. Never use the Read tool on skill files.

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Superpowers: Prevent accidental commits to main/master branches
+# Installed by using-superpowers skill on first invocation
+
+branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+if [[ "$branch" == "main" || "$branch" == "master" ]]; then
+  cat >&2 <<EOF
+⛔ Direct commits to '$branch' are blocked by Superpowers.
+
+Use a feature branch instead:
+  git checkout -b feature/your-feature-name
+
+Or use the using-git-worktrees skill for isolated development.
+EOF
+  exit 1
+fi
+
+exit 0

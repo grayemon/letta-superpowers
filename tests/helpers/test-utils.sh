@@ -78,6 +78,7 @@ SERVER_PID=""
 pass() {
     echo -e "${GREEN}✓ PASS${NC}: $1"
     log "PASS" "$1"
+    TESTS_RUN=$((TESTS_RUN + 1))
     TESTS_PASSED=$((TESTS_PASSED + 1))
 }
 
@@ -92,6 +93,7 @@ fail() {
     else
         log "FAIL" "$message"
     fi
+    TESTS_RUN=$((TESTS_RUN + 1))
     TESTS_FAILED=$((TESTS_FAILED + 1))
 }
 
