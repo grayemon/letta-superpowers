@@ -172,6 +172,23 @@ EOF
 
 **Do NOT clean up worktree** — user needs it alive to iterate on PR feedback.
 
+**After PR is merged:**
+
+```bash
+# Pull merged main
+git pull
+
+# Clean up worktree and branch (see Step 7)
+```
+
+Then check if a release is warranted:
+
+```bash
+grep -q "^\#\# \[Unreleased\]" CHANGELOG.md
+```
+
+If CHANGELOG has `[Unreleased]` entries, offer to invoke the releasing skill.
+
 #### Option 3: Merge and Create Release
 
 First complete Option 1 (Merge Locally), then:
@@ -307,7 +324,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 | Option | Merge | Push | Release | Keep Worktree | Cleanup Branch |
 |--------|-------|------|---------|---------------|----------------|
 | 1. Merge locally | yes | - | - | - | yes |
-| 2. Create PR | - | yes | - | yes | - |
+| 2. Create PR | - | yes | post-merge | yes | - |
 | 3. Merge+Release | yes | - | yes | - | yes |
 | 4. Keep as-is | - | - | - | yes | - |
 | 5. Discard | - | - | - | - | yes (force) |
