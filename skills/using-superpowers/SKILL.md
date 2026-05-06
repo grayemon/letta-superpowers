@@ -159,7 +159,7 @@ Go through these questions in order. Pick the **first match**:
    └─ YES → merge-conflict-resolution (classify, resolve, verify)
 
 10. Creating a new release or tag?
-   └─ YES → releasing (version, changelog, GitHub release)
+   └─ YES → releasing (version, release notes, GitHub release)
 ```
 
 **Key disambiguations:**
@@ -182,7 +182,7 @@ The superpowers workflow is a strict sequential chain:
 5. **test-driven-development** (TDD) → RED-GREEN-REFACTOR (used throughout)
 6. **requesting-code-review** → Quality gate
 7. **finishing-a-development-branch** → Merge/PR/keep decision
-8. **releasing** → (Optional) Semantic versioning, changelog
+8. **releasing** → (Optional) Semantic versioning, release notes
 
 ## Which Skill to Use?
 
