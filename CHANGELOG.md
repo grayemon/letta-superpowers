@@ -2,7 +2,7 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
-## [Unreleased]
+## [v1.3.0] - 2026-05-06
 
 ### Added
 - **Git hooks** to prevent accidental commits to main/master branches (`pre-commit` hook in `.githooks/`)
@@ -15,6 +15,15 @@ All notable changes to this Letta Code adaptation will be documented in this fil
 ### Changed
 - **finishing-a-development-branch** process expanded from 5 to 6 steps (added diff review between base branch detection and option presentation)
 - **releasing** process expanded from 6 to 7 steps (added milestone close after release verification)
+
+### Fixed
+- **Worktree cleanup contradictions** in finishing-a-development-branch (unified to cleanup Options 1,3,5; keep Options 2,4)
+- **Wrong step numbers** in finishing-a-development-branch Integration section
+- **Wrong caller** in using-git-worktrees Integration (brainstorming → writing-plans)
+- **Ambiguous path** in code-quality-reviewer-prompt.md
+- **TESTS_RUN counter** not incremented in test-utils.sh pass()/fail()
+- **Executable bit** on .githooks/pre-commit not preserved by git
+- **.gitattributes** missing .githooks/* rule for LF enforcement; file had CRLF line endings
 
 ## [v1.2.2] - 2026-04-20
 
