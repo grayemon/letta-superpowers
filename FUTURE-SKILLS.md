@@ -25,7 +25,7 @@ Identified gaps from the letta-superpowers skillset audit (2026-04-20).
 ---
 
 ### 2. `merge-conflict-resolution` ✅ IMPLEMENTED
-**Status:** Implemented in v1.5.0. See `skills/merge-conflict-resolution/SKILL.md`.
+**Status:** Implemented. See `skills/merge-conflict-resolution/SKILL.md`.
 
 ---
 

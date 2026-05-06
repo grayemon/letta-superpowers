@@ -167,7 +167,7 @@ Question:
 ### Never list
 
 - Never guess which side is correct without reading both sides
-- Never use `--ours` or `--theirs` blindly
+- Never use `--ours` or `--theirs` without verifying they match the intended outcome
 - Never hand-edit generated artifacts when regeneration is available
 - Never skip tests after resolving conflicts
 - Never abort a merge without user confirmation
