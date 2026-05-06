@@ -2,6 +2,23 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- **Environment detection** in using-git-worktrees (Step 0) — detects if already in a linked worktree and skips creation; includes submodule guard
+- **Consent before worktree creation** — asks user before creating worktrees (no more auto-creation without consent)
+- **Native tool preference** (Step 1a) — defers to harness-native worktree tools before falling back to `git worktree`
+- **Environment detection** in finishing-a-development-branch (Step 2) — determines workspace state (normal repo, worktree, detached HEAD) before presenting menu
+- **Detached HEAD menu** — reduced 3-option menu when working in an externally managed workspace
+- **Provenance-based cleanup** — only cleans up worktrees under `.worktrees/`, `worktrees/`, `.letta/worktrees/`, or `~/.config/letta-superpowers/worktrees/`; leaves harness-owned worktrees alone
+- **CWD safety** — always `cd` to main repo root before `git worktree remove`; runs `git worktree prune` after removal
+- **Continuous execution directive** in subagent-driven-development — execute all tasks without pausing between them
+
+### Changed
+- **using-git-worktrees** core principle updated to: "Detect existing isolation first. Then use native tools. Then fall back to git. Never fight the harness."
+- **finishing-a-development-branch** process expanded from 6 to 7 steps (added environment detection between test verification and base branch detection)
+- **finishing-a-development-branch** core principle updated to: "Verify tests → Detect environment → Review diff → Present options → Execute choice → Clean up"
+
 ## [v1.3.0] - 2026-05-06
 
 ### Added
