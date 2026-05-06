@@ -1,6 +1,6 @@
 # Release Notes
 
-## [Unreleased]
+## v1.5.1 (2026-05-06)
 
 ### Changed
 - **Releasing skill** now detects the release notes file dynamically (RELEASE-NOTES.md or CHANGELOG.md) instead of hardcoding CHANGELOG.md
