@@ -9,7 +9,7 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 Guide completion of development work by presenting clear options and handling chosen workflow.
 
-**Core principle:** Verify tests → Present options → Execute choice → Clean up.
+**Core principle:** Verify tests → Review diff → Present options → Execute choice → Clean up.
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 
@@ -50,7 +50,29 @@ git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
 
 Or ask: "This branch split from main - is that correct?"
 
-### Step 3: Present Options
+### Step 3: Review the Diff
+
+**Before presenting options, review the full diff against the base branch:**
+
+```bash
+git diff <base-branch>...HEAD
+```
+
+This is a quick sanity check — not a deep review. You're checking *what actually changed*, not *what you intended to change*. Look for:
+
+- **Unexpected files** — files touched that shouldn't have been
+- **Scope creep** — changes beyond what the spec/plan required
+- **Leftover debug code** — console.log, print statements, TODO comments
+- **Accidental commits** — config files, secrets, generated files
+- **Cross-task conflicts** — changes in Task A that contradict Task B
+
+**If something looks wrong:** Fix it now, before offering options. Commit the fix.
+
+**If the diff looks clean:** Continue to Step 4.
+
+**Why this matters:** Per-task reviews catch issues within each task. This review catches issues that only emerge when you see the full picture — the same reason you'd review your own PR in a browser before clicking "Create Pull Request."
+
+### Step 4: Present Options
 
 Present exactly these 5 options:
 
@@ -68,7 +90,7 @@ Which option?
 
 **Don't add explanation** - keep options concise.
 
-### Step 4: Execute Choice
+### Step 5: Execute Choice
 
 #### Option 1: Merge Locally
 
@@ -89,7 +111,7 @@ git merge <feature-branch>
 git branch -d <feature-branch>
 ```
 
-Then: Cleanup worktree (Step 5)
+Then: Cleanup worktree (Step 6)
 
 #### Option 2: Push and Create PR
 
@@ -97,8 +119,8 @@ Then: Cleanup worktree (Step 5)
 # Push branch
 git push -u origin <feature-branch>
 
-# Create PR
-gh pr create --title "<title>" --body "$(cat <<'EOF'
+# Create PR (add --milestone if a milestone exists for this work)
+gh pr create --title "<title>" --milestone "<milestone-name>" --body "$(cat <<'EOF'
 ## Summary
 <2-3 bullets of what changed>
 
@@ -108,7 +130,9 @@ EOF
 )"
 ```
 
-Then: Cleanup worktree (Step 5)
+**If no milestone exists** for this work, omit the `--milestone` flag.
+
+Worktree preserved for PR iteration.
 
 #### Option 3: Merge and Create Release
 
@@ -125,7 +149,7 @@ Follow `skills/releasing/SKILL.md` workflow:
 - Tag creation
 - GitHub release
 
-After release completes, cleanup worktree (Step 5).
+After release completes, cleanup worktree (Step 6).
 
 #### Option 4: Keep As-Is
 
@@ -155,11 +179,11 @@ git checkout <base-branch>
 git branch -D <feature-branch>
 ```
 
-Then: Cleanup worktree (Step 5)
+Then: Cleanup worktree (Step 6)
 
-### Step 5: Cleanup Worktree
+### Step 6: Cleanup Worktree
 
-**For Options 1, 2, 3, 5:**
+**For Options 1, 3, 5:**
 
 Check if in worktree:
 
@@ -173,7 +197,7 @@ If yes:
 git worktree remove <worktree-path>
 ```
 
-**For Option 4:** Keep worktree.
+**For Options 2, 4:** Keep worktree.
 
 ## Quick Reference
 
@@ -192,6 +216,11 @@ git worktree remove <worktree-path>
 - **Problem:** Merge broken code, create failing PR
 - **Fix:** Always verify tests before offering options
 
+**Skipping diff review**
+
+- **Problem:** Push unexpected changes, scope creep, leftover debug code
+- **Fix:** Always review the full diff before presenting options
+
 **Open-ended questions**
 
 - **Problem:** "What should I do next?" → ambiguous
@@ -199,8 +228,8 @@ git worktree remove <worktree-path>
 
 **Automatic worktree cleanup**
 
-- **Problem:** Remove worktree when might need it (Option 2, 3)
-- **Fix:** Only cleanup for Options 1 and 4
+- **Problem:** Remove worktree when might need it (Option 2: PR may need iteration)
+- **Fix:** Only cleanup for Options 1, 3, and 5
 
 **No confirmation for discard**
 
@@ -215,21 +244,24 @@ git worktree remove <worktree-path>
 - Merge without verifying tests on result
 - Delete work without confirmation
 - Force-push without explicit request
+- Skip the diff review before presenting options
 
 **Always:**
 
 - Verify tests before offering options
+- Review the full diff before presenting options
 - Present exactly 5 options
-- Get typed confirmation for Option 4
-- Clean up worktree for Options 1 & 4 only
+- Get typed confirmation for Option 5
+- Clean up worktree for Options 1, 3 & 5 only
 
 ## Integration
 
 **Called by:**
 
-- **subagent-driven-development** (Step 7) - After all tasks complete
-- **executing-plans** (Step 5) - After all batches complete
+- **subagent-driven-development** (after all tasks complete) - Final step in per-task loop
+- **executing-plans** (Step 3) - After all tasks complete
 
 **Pairs with:**
 
 - **using-git-worktrees** - Cleans up worktree created by that skill
+- **releasing** - Invoked by Option 3 (Merge and Create Release)

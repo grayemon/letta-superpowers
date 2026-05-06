@@ -171,6 +171,25 @@ Check that:
 - Source archives (zip/tar) are downloadable
 - Release notes render correctly
 
+### Step 7: Close Milestone (if applicable)
+
+If a GitHub milestone exists for this release, close it:
+
+```bash
+# Find the milestone number for this version
+MILESTONE_NUMBER=$(gh api repos/{owner}/{repo}/milestones \
+  --jq ".[] | select(.title == \"vX.Y.Z\") | .number")
+
+# Close the milestone
+if [[ -n "$MILESTONE_NUMBER" ]]; then
+  gh api repos/{owner}/{repo}/milestones/$MILESTONE_NUMBER \
+    --method PATCH \
+    --field state=closed
+fi
+```
+
+**Skip if:** No milestone exists for this version, or the project doesn't use milestones.
+
 ## Tag Naming Convention
 
 | Pattern | Example | Use Case |
@@ -193,14 +212,26 @@ After publishing:
 
 ## Quick Reference
 
+### Pre-Release Checklist
+
+| # | Check | Command |
+|---|-------|---------|
+| 1 | Clean tree | `git status` |
+| 2 | Tests pass | `<test command>` |
+| 3 | CHANGELOG updated | `grep CHANGELOG` |
+| 4 | Version confirmed | Ask user |
+
+### Release Process
+
 | Step | Command | Purpose |
 |------|---------|---------|
-| 1 | `git status` | Verify clean tree |
-| 2 | `<test command>` | Verify tests pass |
-| 3 | `grep CHANGELOG` | Verify docs updated |
-| 4 | `git tag -a` | Create tag |
-| 5 | `git push --tags` | Publish tag |
-| 6 | GitHub API | Create release |
+| 1 | Confirm version | Ask user to verify |
+| 2 | `git add` + `git commit` | Final CHANGELOG commit |
+| 3 | `git tag -a vX.Y.Z` | Create annotated tag |
+| 4 | `git push origin main` + `git push origin vX.Y.Z` | Push commits and tag |
+| 5 | GitHub API or UI | Create release |
+| 6 | Check release URL | Verify release |
+| 7 | `gh api` PATCH milestone | Close milestone (if applicable) |
 
 ## Common Mistakes
 

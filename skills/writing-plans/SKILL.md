@@ -136,6 +136,40 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
+## Optional: Create GitHub Milestone
+
+If the project uses GitHub milestones for tracking, create a milestone and file issues for each task after the plan is saved.
+
+**Ask the user:** "Should I create a GitHub milestone and issues for this plan?"
+
+**If yes:**
+
+### 1. Create the milestone
+
+```bash
+gh api repos/{owner}/{repo}/milestones \
+  --method POST \
+  --field title="vX.Y.Z" \
+  --field description="[One-line summary from plan goal]"
+```
+
+**Milestone title** should match the version or feature name (e.g., `v1.3.0` or `auth-feature`).
+
+### 2. File issues for each task
+
+For each task in the plan:
+
+```bash
+gh issue create \
+  --title "Task N: [Component Name]" \
+  --body "[Task description from plan]" \
+  --milestone "vX.Y.Z"
+```
+
+**Issue body** should contain the task's files, steps, and acceptance criteria — enough for a human to understand the scope without reading the plan file.
+
+**Skip if:** The project doesn't use GitHub issues, the user declines, or the plan is for a small fix that doesn't warrant tracking.
+
 ## Execution Handoff
 
 After saving the plan, offer execution choice:
