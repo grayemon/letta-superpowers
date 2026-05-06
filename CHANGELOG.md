@@ -2,7 +2,7 @@
 
 All notable changes to this Letta Code adaptation will be documented in this file.
 
-## [Unreleased]
+## [v1.4.0] - 2026-05-06
 
 ### Added
 - **Environment detection** in using-git-worktrees (Step 0) — detects if already in a linked worktree and skips creation; includes submodule guard
