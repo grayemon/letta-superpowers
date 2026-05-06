@@ -120,6 +120,29 @@ digraph version_decision {
 }
 ```
 
+### 5. Review Changes
+
+**Before releasing, verify the changes are complete and correct.** This catches stale references, missed files, and incomplete migrations — exactly the kind of gap that a per-file review misses.
+
+```bash
+# Review diff since last release
+git diff vPREVIOUS...HEAD --stat
+```
+
+Then dispatch a subagent to check for gaps:
+
+```
+Review the changes between vPREVIOUS and HEAD for:
+1. Stale references to renamed/removed files
+2. Cross-file consistency (e.g., if a filename changed, are all references updated?)
+3. Missing updates that the change implies but didn't include
+4. Any hardcoded values that should have been updated
+```
+
+**If gaps found:** Fix before releasing. Commit the fix, then restart the checklist.
+
+**If clean:** Proceed to Step 1.
+
 ## Release Process
 
 ### Step 1: Confirm Version
@@ -243,6 +266,7 @@ After publishing:
 | 2 | Tests pass | `<test command>` |
 | 3 | Release notes updated | `grep "$RELEASE_FILE"` |
 | 4 | Version confirmed | Ask user |
+| 5 | Review changes | `git diff` + subagent gap check |
 
 ### Release Process
 
