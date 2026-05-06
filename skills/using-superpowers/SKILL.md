@@ -155,6 +155,9 @@ Go through these questions in order. Pick the **first match**:
 9. Tests pass and ready to integrate?
    └─ YES → finishing-a-development-branch (choose merge/PR/keep)
 
+9b. Merge produced conflicts?
+   └─ YES → merge-conflict-resolution (classify, resolve, verify)
+
 10. Creating a new release or tag?
    └─ YES → releasing (version, changelog, GitHub release)
 ```
@@ -191,6 +194,7 @@ The superpowers workflow is a strict sequential chain:
 | "Have plan, implement it" | subagent-driven-development | (or executing-plans) |
 | "Want review before merge" | requesting-code-review | receiving-code-review (if external feedback) |
 | "Tests pass, what next?" | finishing-a-development-branch | releasing (optional) |
+| "Merge has conflicts" | merge-conflict-resolution | verification-before-completion |
 | "Multiple independent failures" | dispatching-parallel-agents | Then debug each |
 
 ## Hard Gates (Non-Negotiable)
@@ -304,6 +308,7 @@ User: "Get a second opinion from Claude CLI"
 | "Work on multiple features" | `using-git-worktrees` | `working-in-parallel` |
 | "Parallel Letta subagents" | `dispatching-parallel-agents` | (no conflict) |
 | "External Claude/Codex" | `dispatching-coding-agents` | (no conflict) |
+| "Merge conflicts" | `merge-conflict-resolution` | (no conflict) |
 
 ## Skill Types
 
