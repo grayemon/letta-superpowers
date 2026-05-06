@@ -13,7 +13,7 @@ Identified gaps from the letta-superpowers skillset audit (2026-04-20).
 
 **Coverage Gap:**
 - `brainstorming` writes design docs/specs
-- `releasing` handles release notes/changelog
+- `releasing` handles release notes
 - Missing: User guides, README updates, API docs, general documentation workflow
 
 **Use Cases:**
