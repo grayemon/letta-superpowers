@@ -45,10 +45,27 @@ Classify each conflict before editing it:
 
 Apply the strategy that matches the conflict type:
 
-- **Both modified:** Read both sides, understand intent, merge intelligently, and escalate if the correct result is ambiguous.
-- **Delete/modify:** Ask which intent wins: keep the deletion or preserve the modification.
-- **Generated file:** Auto-resolve by regenerating the file from source or build tooling.
-- **Semantic conflict:** Use `systematic-debugging` to trace behavior, compare assumptions, and resolve the underlying logic mismatch.
+**Both modified:**
+- Read both sides of each conflict region
+- Understand *intent* of each change (check commit messages if unclear)
+- Merge intelligently — preserve both intents when possible
+- If one side clearly supersedes the other, take the newer intent
+- If genuinely ambiguous → **escalate to user** with both sides shown
+
+**Delete/modify:**
+- Ask: "Branch A deleted this file, Branch B modified it. Which intent wins?"
+- If delete wins: `git rm <file>`
+- If modify wins: `git add <file>` (keep modified version)
+
+**Generated file:**
+- Auto-resolve: `git checkout --theirs <file> && <regenerate command>`
+- Or: `git rm <file> && <regenerate command>`
+- Never manually edit generated files
+
+**Semantic conflict:**
+- No markers to resolve — this is a test failure after clean merge
+- Use `systematic-debugging` skill to find root cause
+- Common pattern: renamed symbol, moved file, changed API
 
 Do not use `--ours` or `--theirs` as a default answer. Those flags are only correct when they match the intended outcome.
 
@@ -81,28 +98,28 @@ git merge --continue
 Final verification must confirm:
 
 - Tests pass
-- No conflict markers remain in the tree
+- No conflict markers remain: `grep -r "<<<<<<" . --include="*.md" --include="*.js" --include="*.ts" --include="*.py" --include="*.sh"` returns nothing
 - Working tree is clean or only contains intentional, unrelated changes
 
 ## Auto-Resolve Rules & Escalation
 
 ### CAN auto-resolve
 
-| Situation | Safe action |
-|-----------|-------------|
-| Generated file | Regenerate from source, then stage the result |
-| Whitespace-only differences | Normalize formatting and keep the intended content |
-| Superset change | Combine both changes when one branch is a strict superset of the other |
-| Same change on both sides | Keep the shared result if both sides made the same edit |
+| Situation | Safe action | Reasoning |
+|-----------|-------------|-----------|
+| Generated file | Regenerate from source, then stage the result | No intent to preserve — it's derived |
+| Whitespace-only differences | Normalize formatting and keep the intended content | No semantic difference |
+| Superset change | Combine both changes when one branch is a strict superset of the other | Preserves both intents |
+| Same change on both sides | Keep the shared result if both sides made the same edit | Duplicate effort, identical intent |
 
 ### MUST escalate
 
-| Situation | Why it must escalate |
-|-----------|----------------------|
-| Both sides changed the same logic differently | Intent is unclear without review |
-| Delete/modify conflict | File existence itself is in dispute |
-| Resolution might break invariants | Needs design-level judgment |
-| 3+ files conflict in the same area | Likely a broader design or refactor issue |
+| Situation | Why it must escalate | What to show |
+|-----------|----------------------|-------------|
+| Both sides changed the same logic differently | Intent is unclear without review | Both sides of the conflict with commit messages |
+| Delete/modify conflict | File existence itself is in dispute | File path, what was deleted, what was modified |
+| Resolution might break invariants | Needs design-level judgment | The conflict + what invariants might be affected |
+| 3+ files conflicted | Likely a broader design or refactor issue | List of all conflicted files with conflict type |
 
 ### Escalation format template
 
@@ -153,15 +170,15 @@ Question:
 - Never use `--ours` or `--theirs` blindly
 - Never hand-edit generated artifacts when regeneration is available
 - Never skip tests after resolving conflicts
-- Never leave conflict markers in committed code
+- Never abort a merge without user confirmation
 
 ### Always list
 
 - Always classify the conflict type first
-- Always inspect both sides of the change
+- Always read commit messages for both sides
 - Always regenerate generated files when possible
 - Always stage resolved files before continuing the merge
-- Always verify the result with tests and conflict-marker checks
+- Always escalate ambiguous conflicts to the user
 
 ## Integration
 
