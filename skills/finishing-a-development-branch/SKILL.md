@@ -219,6 +219,48 @@ Then: Cleanup worktree (Step 7), then force-delete branch:
 git branch -D <feature-branch>
 ```
 
+#### Detached HEAD Options
+
+**Detached Option 1: Push as new branch and create PR**
+
+```bash
+# Create a named branch from current detached HEAD
+git checkout -b <new-branch-name>
+
+# Then follow standard Option 2 flow
+git push -u origin <new-branch-name>
+gh pr create --title "<title>" --body "$(cat <<'EOF'
+## Summary
+<2-3 bullets of what changed>
+
+## Test Plan
+- [ ] <verification steps>
+EOF
+)"
+```
+
+**Do NOT clean up worktree** — same as standard Option 2.
+
+**Detached Option 2: Keep as-is**
+
+Same as standard Option 4. Report: "Keeping workspace at `<path>` (detached HEAD)."
+
+**Don't cleanup worktree.**
+
+**Detached Option 3: Discard**
+
+**Confirm first:**
+
+```
+This will permanently abandon:
+- All uncommitted/unreachable commits
+- Workspace at <path>
+
+Type 'discard' to confirm.
+```
+
+If confirmed: No branch to delete (detached HEAD). If in a harness-owned worktree, use your platform's workspace-exit tool or leave in place.
+
 ### Step 7: Cleanup Workspace
 
 **Only runs for Options 1, 3, and 5.** Options 2 and 4 always preserve the worktree.
@@ -232,6 +274,18 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 **If `GIT_DIR == GIT_COMMON`:** Normal repo, no worktree to clean up. Done.
 
 **If worktree path is under `.worktrees/`, `worktrees/`, `.letta/worktrees/`, or `~/.config/letta-superpowers/worktrees/`:** Superpowers created this worktree — we own cleanup.
+
+```bash
+# Check if worktree is under a superpowers-managed directory
+case "$WORKTREE_PATH" in
+  */.worktrees/*|*/worktrees/*|*/.letta/worktrees/*|*/.config/letta-superpowers/worktrees/*)
+    echo "superpowers-owned"
+    ;;
+  *)
+    echo "harness-owned"
+    ;;
+esac
+```
 
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
@@ -260,7 +314,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 |--------|------|---------------|----------------|
 | 1. Push+PR | yes | yes | - |
 | 2. Keep as-is | - | yes | - |
-| 3. Discard | - | - | yes (force) |
+| 3. Discard | - | - | — (detached) |
 
 ## Common Mistakes
 
