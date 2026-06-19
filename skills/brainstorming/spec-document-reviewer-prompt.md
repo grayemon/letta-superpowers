@@ -4,13 +4,12 @@ Use this template when dispatching a spec document reviewer subagent.
 
 **Purpose:** Verify the spec is complete, consistent, and ready for implementation planning.
 
-**Dispatch after:** Spec document is written to docs/specs/
+**Dispatch after:** Spec document is written to docs/superpowers/specs/
 
 ```
-Task({
-  subagent_type: "explore",
-  description: "Review spec document",
-  prompt: `
+Subagent (general-purpose):
+  description: "Review spec document"
+  prompt: |
     You are a spec document reviewer. Verify this spec is complete and ready for planning.
 
     **Spec to review:** [SPEC_FILE_PATH]
@@ -45,7 +44,6 @@ Task({
 
     **Recommendations (advisory, do not block approval):**
     - [suggestions for improvement]
-  `
-});
+```
 
 **Reviewer returns:** Status, Issues (if any), Recommendations
