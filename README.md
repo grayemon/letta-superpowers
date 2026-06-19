@@ -35,7 +35,7 @@ cp -r /tmp/superpowers-letta/skills/* .skills/
 
 3. **writing-plans** - Breaks work into bite-sized tasks (2-5 minutes each). Every task has exact file paths, complete code, verification steps.
 
-4. **subagent-driven-development** or **executing-plans** - Dispatches fresh subagent per task with single reviewer and file-based artifacts, or executes in batches with human checkpoints.
+4. **subagent-driven-development** or **executing-plans** - Dispatches fresh subagent per task with single reviewer and file-based artifacts, or executes in batches with human checkpoints. Continuous execution between tasks — only stops for blockers or ambiguity.
 
 5. **test-driven-development** - Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit.
 
@@ -87,6 +87,9 @@ This Letta Code adaptation includes:
 - SDD review system uses single reviewer with file-based artifacts and progress ledger
 - Writing-plans includes Global Constraints, per-task Interfaces, and Task Right-Sizing
 - Forge-neutral language across all skills (adapted for Letta Code conventions)
+- Consolidated skill navigation: single Decision Ladder replaces 5 overlapping systems
+- All 16 skills have SUBAGENT-STOP tags and Integration sections
+- TDD exceptions require explicit user approval; mock unavoidability criteria defined
 
 ## Contributing
 
