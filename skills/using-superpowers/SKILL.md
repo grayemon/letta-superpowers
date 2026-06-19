@@ -125,7 +125,7 @@ When multiple skills could apply, use this order:
 3. **Completion skills last** (finishing-a-development-branch, releasing) - these finalize work
 
 "Let's build X" → brainstorming first, then implementation skills.
-"Fix this bug" → debugging first, then domain-specific skills.
+"Fix this bug" → systematic-debugging first, then domain-specific skills.
 "Done with feature" → finishing-a-development-branch, optionally releasing.
 
 ## Skill Decision Ladder
