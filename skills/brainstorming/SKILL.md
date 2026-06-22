@@ -30,10 +30,11 @@ You MUST create a task for each of these items and complete them in order:
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/specs/YYYY-MM-DD-<topic>-design.md` and commit
-7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
-8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+6. **Create isolated workspace** — invoke using-git-worktrees skill BEFORE writing the spec (required because step 7 commits)
+7. **Write design doc** — save to `docs/specs/YYYY-MM-DD-<topic>-design.md` and commit
+8. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
+9. **User reviews written spec** — ask user to review the spec file before proceeding
+10. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 
@@ -44,6 +45,7 @@ digraph brainstorming {
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
+    "Create isolated workspace" [shape=box];
     "Write design doc" [shape=box];
     "Spec self-review\n(fix inline)" [shape=box];
     "User reviews spec?" [shape=diamond];
@@ -54,7 +56,8 @@ digraph brainstorming {
     "Propose 2-3 approaches" -> "Present design sections";
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write design doc" [label="yes"];
+    "User approves design?" -> "Create isolated workspace" [label="yes"];
+    "Create isolated workspace" -> "Write design doc";
     "Write design doc" -> "Spec self-review\n(fix inline)";
     "Spec self-review\n(fix inline)" -> "User reviews spec?";
     "User reviews spec?" -> "Write design doc" [label="changes requested"];
@@ -104,6 +107,12 @@ digraph brainstorming {
 - Don't propose unrelated refactoring. Stay focused on what serves the current goal.
 
 ## After the Design
+
+**Isolated Workspace (REQUIRED):**
+
+- Invoke using-git-worktrees skill to create an isolated workspace
+- This MUST happen BEFORE writing the spec because the next step commits
+- Prevents "blocked on commit to main" issue when pre-commit hooks block direct commits to main/master
 
 **Documentation:**
 
@@ -166,8 +175,10 @@ If they agree to the companion, read the detailed guide before proceeding:
 **Called by:**
 - using-superpowers - decision ladder step 2
 
+**Invokes:**
+- using-git-worktrees - REQUIRED before writing spec (step 6)
+
 **Followed by:**
-- using-git-worktrees - set up isolated workspace
 - writing-plans - create implementation plan
 
 **Hard gate:** Must complete before any implementation skill
