@@ -1,5 +1,19 @@
 # Release Notes
 
+## v1.7.2 (2026-06-28)
+
+### Fixed
+
+- **using-git-worktrees** `core.hooksPath` was set to an absolute path, causing every worktree to point at the original checkout's `.githooks` directory instead of its own. Now set to repo-relative `.githooks` so each worktree resolves its own hooks directory.
+- **using-git-worktrees** Letta Code hooks in `.letta/settings.json` with relative paths (e.g., `./hooks/...`) break silently when a worktree changes the CWD. Added verification script, Common Mistakes entry, Quick Reference row, and Red Flags entry recommending `$LETTA_WORKING_DIR/hooks/...` instead.
+- **brainstorming** skill tried to commit the design spec before creating an isolated workspace, getting blocked by the pre-commit hook that prevents direct commits to main/master. Added step 6 to invoke `using-git-worktrees` before the commit step.
+
+### Changed
+
+- **using-git-worktrees** added "Repo-aware provisioning" guidance — verify repo-local hook/bootstrap config instead of assuming a fixed hook set
+- **using-superpowers** `setup-git-hooks.sh` now sets `core.hooksPath` to relative `.githooks` instead of absolute path
+- **tests/test-git-hooks.sh** now asserts `core.hooksPath` is repo-relative (`.githooks`)
+
 ## v1.7.1 (2026-06-19)
 
 ### Changed
