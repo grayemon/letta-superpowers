@@ -32,6 +32,7 @@ pass "Hook contains Superpowers marker"
 info "  Test 4: core.hooksPath is configured"
 HOOKS_PATH="$(git config core.hooksPath)"
 [[ -n "$HOOKS_PATH" ]] || fail "core.hooksPath not set"
+[[ "$HOOKS_PATH" == ".githooks" ]] || fail "core.hooksPath should be repo-relative (.githooks), got: $HOOKS_PATH"
 pass "core.hooksPath is set to: $HOOKS_PATH"
 
 # Test 5: Hook blocks commits on main (simulated)
