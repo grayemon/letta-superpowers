@@ -60,6 +60,12 @@ Native tools handle directory placement, branch creation, and cleanup automatica
 
 **Letta Code note:** The `CreateWorktree` tool enforces `.letta/worktrees/` as the worktree directory. This is the canonical location for Letta Code agents.
 
+**Repo-aware provisioning:** after the worktree is created, verify the repo's own worktree and hook configuration instead of assuming a fixed hook set.
+
+- Read repo-local config files that describe worktree or hook provisioning.
+- If the repo provides a bootstrap or hook installer, run it.
+- Never hardcode hook filenames or assume every install uses the same hook directory contents.
+
 Only proceed to Step 1b if you have no native worktree tool available.
 
 ### 1b. Git Worktree Fallback

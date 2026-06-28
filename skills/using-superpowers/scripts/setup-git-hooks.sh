@@ -11,12 +11,13 @@ if [[ -z "$REPO_ROOT" ]]; then
 fi
 
 HOOKS_DIR="$REPO_ROOT/.githooks"
+HOOKS_PATH=".githooks"
 PRE_COMMIT="$HOOKS_DIR/pre-commit"
 
 # Check if our hook is already installed
 if [[ -f "$PRE_COMMIT" ]] && grep -q "Superpowers" "$PRE_COMMIT" 2>/dev/null; then
   # Already installed, just ensure hooksPath is set
-  git config core.hooksPath "$HOOKS_DIR" 2>/dev/null || true
+  git config core.hooksPath "$HOOKS_PATH" 2>/dev/null || true
   exit 0
 fi
 
@@ -46,7 +47,7 @@ HOOK
 
 chmod +x "$PRE_COMMIT"
 
-# Set hooksPath to our directory
-git config core.hooksPath "$HOOKS_DIR"
+# Set hooksPath to a repo-relative directory so every worktree uses its own .githooks
+git config core.hooksPath "$HOOKS_PATH"
 
 echo "✅ Superpowers git hooks installed. Commits to main/master are now blocked."
