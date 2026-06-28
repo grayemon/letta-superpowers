@@ -132,6 +132,26 @@ if [ -f pyproject.toml ]; then poetry install; fi
 if [ -f go.mod ]; then go mod download; fi
 ```
 
+### Letta Code Hooks (Letta Code only)
+
+If `.letta/settings.json` exists in the project root, it may contain hook commands with relative paths (e.g., `./hooks/auto-format.sh`). These paths resolve from the **CWD**, not the project root. When entering a worktree, the CWD changes and relative paths break silently — hooks stop firing with no error.
+
+**Verify after entering a worktree:**
+
+```bash
+# Check if any hook commands use relative paths that don't resolve from CWD
+if [ -f "$LETTA_WORKING_DIR/.letta/settings.json" ]; then
+  for cmd in $(jq -r '.. | .command? // empty' "$LETTA_WORKING_DIR/.letta/settings.json" 2>/dev/null); do
+    if [[ "$cmd" == ./* ]] && [ ! -f "$cmd" ]; then
+      echo "⚠️  Hook not reachable from worktree: $cmd"
+      echo "   Fix: Use \$LETTA_WORKING_DIR/hooks/... instead of ./hooks/... in .letta/settings.json"
+    fi
+  done
+fi
+```
+
+**Prevention:** When configuring Letta Code hooks in `.letta/settings.json`, always use `$LETTA_WORKING_DIR/hooks/...` instead of `./hooks/...`. The `LETTA_WORKING_DIR` environment variable is set to the project root and is available in all hook environments regardless of CWD.
+
 ## Step 3: Verify Clean Baseline
 
 Run tests to ensure workspace starts clean:
@@ -170,6 +190,7 @@ Ready to implement <feature-name>
 | Permission error on create | Sandbox fallback, work in place |
 | Tests fail during baseline | Report failures + ask |
 | No package.json/Cargo.toml | Skip dependency install |
+| `.letta/settings.json` hooks use `./hooks/...` | Replace with `$LETTA_WORKING_DIR/hooks/...` |
 
 ## Common Mistakes
 
@@ -197,6 +218,11 @@ Ready to implement <feature-name>
 
 - **Problem:** Can't distinguish new bugs from pre-existing issues
 - **Fix:** Report failures, get explicit permission to proceed
+
+### Letta Code hooks with relative paths
+
+- **Problem:** `.letta/settings.json` hook commands use relative paths (e.g., `./hooks/auto-format.sh`). When a worktree is entered, the CWD changes and these paths break silently — hooks stop firing with no error message.
+- **Fix:** Use `$LETTA_WORKING_DIR/hooks/...` instead of `./hooks/...` in `.letta/settings.json`. The `LETTA_WORKING_DIR` environment variable is set to the project root and is available in all hook environments regardless of CWD.
 
 ## Example Workflow
 
@@ -233,6 +259,7 @@ Ready to implement auth feature
 - Verify directory is ignored for project-local
 - Auto-detect and run project setup
 - Verify clean test baseline
+- Verify Letta Code hooks resolve from worktree CWD (Letta Code only)
 
 ## Integration
 
