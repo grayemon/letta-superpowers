@@ -309,6 +309,15 @@ git worktree remove "$WORKTREE_PATH"
 git worktree prune  # Self-healing: clean up any stale registrations
 ```
 
+**After removal — restore working directory:** The session cwd still points to the now-deleted worktree. File tools (`Read`, `Edit`, `Write`) that use the session cwd will fail. Run this in a separate Bash command to restore the persistent shell's cwd:
+
+```bash
+cd "$MAIN_ROOT"
+pwd  # Verify we're back in the main repo
+```
+
+**Note:** This changes the persistent shell's cwd, but the session cwd (used by `Read` and other file tools) may still be stale. Use absolute paths for all file operations after worktree removal until the session cwd is updated. On Letta Code, `EnterWorktree` cannot switch back to the main working tree (it only accepts linked worktrees under `.letta/worktrees/`). If available, use your platform's `/chdir` command or restart the session to fully restore the session cwd.
+
 **Otherwise:** The host environment (harness) owns this workspace. Do NOT remove it. If your platform provides a workspace-exit tool, use it. Otherwise, leave the workspace in place.
 
 ## Quick Reference
@@ -357,6 +366,10 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - **Problem:** Command fails silently when CWD is inside the worktree being removed
 - **Fix:** Always `cd` to main repo root before `git worktree remove`
 
+**Session cwd not restored after worktree removal**
+- **Problem:** After `git worktree remove`, the session cwd still points to the deleted directory. File tools (`Read`, `Edit`, `Write`) fail because the directory no longer exists. `EnterWorktree` cannot switch back to the main working tree — it only accepts linked worktrees.
+- **Fix:** Run `cd "$MAIN_ROOT"` in a separate Bash command after removal to restore the persistent shell's cwd. Use absolute paths for all file operations until the session cwd is updated. If available, use `/chdir` or restart the session to fully restore the session cwd.
+
 **Cleaning up harness-owned worktrees**
 - **Problem:** Removing a worktree the harness created causes phantom state
 - **Fix:** Only clean up worktrees under `.worktrees/`, `worktrees/`, or `.letta/worktrees/`
@@ -376,6 +389,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - Clean up worktrees you didn't create (provenance check)
 - Run `git worktree remove` from inside the worktree
 - Skip the diff review before presenting options
+- Assume the session cwd is restored after worktree removal
 
 **Always:**
 - Verify tests before offering options
@@ -386,6 +400,8 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - Clean up worktree for Options 1, 3 & 5 only
 - `cd` to main repo root before worktree removal
 - Run `git worktree prune` after removal
+- `cd` to main repo root after worktree removal to restore shell cwd
+- Use absolute paths for file operations after worktree removal
 
 ## Integration
 
