@@ -219,9 +219,9 @@ Check that:
 
 ### Step 7: Mark Roadmap Phase Complete (if applicable)
 
-If a `roadmap.md` exists with an active phase for this release, invoke `managing-roadmap` to mark the phase as Complete.
+If a `roadmap.md` exists in the repo root with an active phase for this release, invoke `managing-roadmap` to mark the phase as Complete.
 
-**Skip if:** No `roadmap.md` exists, or no phase corresponds to this release.
+**Skip if:** No `roadmap.md` exists in the repo root, or no phase corresponds to this release.
 
 ## Tag Naming Convention
 
