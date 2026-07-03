@@ -304,10 +304,42 @@ esac
 
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
-cd "$MAIN_ROOT"
+WORKTREE_PATH=$(git rev-parse --show-toplevel)
+```
+
+**Before removing the worktree, switch the session cwd to a valid directory.** The Bash tool spawns each command with `cwd` set to the session cwd. After `git worktree remove`, the session cwd would point to a deleted directory — every subsequent Bash command would fail with ENOENT. `EnterWorktree` cannot switch back to the main working tree (it only accepts linked worktrees under `.letta/worktrees/`).
+
+**The workaround: create a transition worktree before removing the old one.** Call `EnterWorktree` with `name: "cleanup"` to create a new worktree from the default branch. This switches the session cwd to the new worktree — a valid directory. Then remove the old worktree from the safety of the new one.
+
+```
+EnterWorktree({ name: "cleanup" })
+```
+
+After `EnterWorktree` switches the session cwd to the cleanup worktree:
+
+```bash
 git worktree remove "$WORKTREE_PATH"
 git worktree prune  # Self-healing: clean up any stale registrations
 ```
+
+The agent can continue post-cleanup work (verifying merge, updating release notes, etc.) from the cleanup worktree. Bash commands work because the session cwd is valid.
+
+**After all post-cleanup work is done**, present this message to the user:
+
+```
+Cleanup complete. The transition worktree is at:
+  <cleanup-worktree-path>
+
+Please run:
+
+  /chdir <MAIN_ROOT>
+
+Then remove the transition worktree:
+
+  git worktree remove <cleanup-worktree-path>
+```
+
+Replace `<MAIN_ROOT>` and `<cleanup-worktree-path>` with the actual paths. On Letta Code, `/chdir` is a built-in TUI command that changes the session cwd — only the user can run it. Do NOT attempt further Bash commands after presenting this message, as the cleanup worktree will be removed.
 
 **Otherwise:** The host environment (harness) owns this workspace. Do NOT remove it. If your platform provides a workspace-exit tool, use it. Otherwise, leave the workspace in place.
 
@@ -355,7 +387,11 @@ git worktree prune  # Self-healing: clean up any stale registrations
 
 **Running git worktree remove from inside the worktree**
 - **Problem:** Command fails silently when CWD is inside the worktree being removed
-- **Fix:** Always `cd` to main repo root before `git worktree remove`
+- **Fix:** Create a transition worktree with `EnterWorktree` first, then run `git worktree remove` from the new worktree
+
+**Session cwd invalid after worktree removal**
+- **Problem:** After `git worktree remove`, the session cwd still points to the deleted directory. The Bash tool spawns each command with `cwd` set to the session cwd — if that directory doesn't exist, the spawn fails with ENOENT. `EnterWorktree` cannot switch back to the main working tree (it only accepts linked worktrees).
+- **Fix:** Before removing the old worktree, call `EnterWorktree` with `name: "cleanup"` to create a transition worktree. This switches the session cwd to a valid directory. Then remove the old worktree from the cleanup worktree. After all post-cleanup work, ask the user to `/chdir` to main and remove the cleanup worktree.
 
 **Cleaning up harness-owned worktrees**
 - **Problem:** Removing a worktree the harness created causes phantom state
@@ -376,6 +412,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - Clean up worktrees you didn't create (provenance check)
 - Run `git worktree remove` from inside the worktree
 - Skip the diff review before presenting options
+- Remove a worktree without first switching the session cwd to a valid directory
 
 **Always:**
 - Verify tests before offering options
@@ -384,8 +421,9 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - Present exactly 5 options (or 3 for detached HEAD)
 - Get typed confirmation for Option 5
 - Clean up worktree for Options 1, 3 & 5 only
-- `cd` to main repo root before worktree removal
+- Create a transition worktree with `EnterWorktree` before removing the old worktree
 - Run `git worktree prune` after removal
+- Ask the user to `/chdir` to main and remove the transition worktree when all post-cleanup work is done
 
 ## Integration
 

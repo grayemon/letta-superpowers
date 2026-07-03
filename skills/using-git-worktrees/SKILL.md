@@ -54,11 +54,11 @@ Honor any existing declared preference without asking. If the user declines cons
 
 ### 1a. Native Worktree Tools (preferred)
 
-The user has asked for an isolated workspace (Step 0 consent). Do you already have a way to create a worktree? On Letta Code, this is the `CreateWorktree` tool. On other platforms, it might be `EnterWorktree`, `WorktreeCreate`, a `/worktree` command, or a `--worktree` flag. If you do, use it and skip to Step 2.
+The user has asked for an isolated workspace (Step 0 consent). Do you already have a way to create a worktree? On Letta Code, this is the `EnterWorktree` tool. On other platforms, it might be `WorktreeCreate`, a `/worktree` command, or a `--worktree` flag. If you do, use it and skip to Step 2.
 
 Native tools handle directory placement, branch creation, and cleanup automatically. Using `git worktree add` when you have a native tool creates phantom state your harness can't see or manage.
 
-**Letta Code note:** The `CreateWorktree` tool enforces `.letta/worktrees/` as the worktree directory. This is the canonical location for Letta Code agents.
+**Letta Code note:** The `EnterWorktree` tool enforces `.letta/worktrees/` as the worktree directory. This is the canonical location for Letta Code agents.
 
 **Repo-aware provisioning:** after the worktree is created, verify the repo's own worktree and hook configuration instead of assuming a fixed hook set.
 
@@ -251,7 +251,7 @@ Ready to implement auth feature
 
 **Never:**
 - Create a worktree when Step 0 detects existing isolation
-- Use `git worktree add` when you have a native worktree tool (e.g., `CreateWorktree`). This is the #1 mistake — if you have it, use it.
+- Use `git worktree add` when you have a native worktree tool (e.g., `EnterWorktree`). This is the #1 mistake — if you have it, use it.
 - Skip Step 1a by jumping straight to Step 1b's git commands
 - Create worktree without verifying it's ignored (project-local)
 - Skip baseline test verification
