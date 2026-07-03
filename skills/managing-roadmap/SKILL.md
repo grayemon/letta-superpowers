@@ -98,6 +98,13 @@ gh label create "phase/[kebab-case-name]" \
 
 **Skip label creation if:** The project doesn't use GitHub, or the label already exists.
 
+**After creating the phase and label**, commit:
+
+```bash
+git add roadmap.md
+git commit -m "docs: Add phase [phase-name] to roadmap.md"
+```
+
 ### 3. File Issues
 
 Create GitHub issues for each task in a plan, tagged with the phase label.
@@ -119,7 +126,7 @@ gh issue create \
 
 ```bash
 git add roadmap.md
-git commit -m "docs: Add phase [phase-name] to roadmap.md"
+git commit -m "docs: File issues for phase [phase-name] in roadmap.md"
 ```
 
 ### 4. Mark Phase Complete
@@ -206,5 +213,5 @@ Or read `roadmap.md` directly for a full overview — no network needed.
 - `writing-plans` — after plan is saved, optionally creates a phase and files issues
 - `releasing` — after release, marks the phase as complete in roadmap.md
 
-**Followed by:**
-- `finishing-a-development-branch` — can reference the phase label for PR creation (`--label phase/X`)
+**Referenced by:**
+- `finishing-a-development-branch` — uses phase labels for PR creation (`--label phase/X`)
