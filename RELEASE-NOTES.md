@@ -20,7 +20,7 @@
 - **executing-plans** fixed stale reference to generic `../using-superpowers/references/` directory — now links to `letta-code-tools.md` specifically
 - **letta-code-tools.md** rewritten to match Letta Code v0.27.18 actual default toolset — `Task`→`Agent` (with alias note), removed `TodoWrite`/`EnterPlanMode`/`ExitPlanMode`/`explore` subagent type, added `TaskCreate`/`TaskGet`/`TaskList`/`TaskUpdate`/`EnterWorktree`/`fork` subagent type, noted `Glob`/`Grep` as non-default
 - **skill-discovery-testing.md** example updated — `Task`→`Agent` tool name
-- **finishing-a-development-branch** Step 7 — added session cwd restoration after worktree removal: `cd "$MAIN_ROOT"` in separate Bash command, warning about stale session cwd, use absolute paths for file operations
+- **finishing-a-development-branch** Step 7 — added session cwd restoration after worktree removal: Bash tool spawns each command with `cwd` set to the session cwd, which points to the deleted worktree after removal. Agent must ask user to run `/chdir <main-repo-path>` to restore. No agent tool can change the session cwd.
 
 ### Removed
 

@@ -309,14 +309,26 @@ git worktree remove "$WORKTREE_PATH"
 git worktree prune  # Self-healing: clean up any stale registrations
 ```
 
-**After removal — restore working directory:** The session cwd still points to the now-deleted worktree. File tools (`Read`, `Edit`, `Write`) that use the session cwd will fail. Run this in a separate Bash command to restore the persistent shell's cwd:
+**After removal — session cwd is stale:** The session cwd still points to the now-deleted worktree directory. Every subsequent Bash command will fail because the tool spawns a new process with `cwd` set to the session cwd — and that directory no longer exists. `EnterWorktree` cannot switch back to the main working tree (it only accepts linked worktrees under `.letta/worktrees/`).
 
-```bash
-cd "$MAIN_ROOT"
-pwd  # Verify we're back in the main repo
+**You must ask the user to restore the session cwd.** Present this message:
+
+```
+Worktree removed. Your session working directory still points to the
+deleted worktree. Please run:
+
+/chdir MAIN_ROOT
+
+to restore your working directory before continuing.
 ```
 
-**Note:** This changes the persistent shell's cwd, but the session cwd (used by `Read` and other file tools) may still be stale. Use absolute paths for all file operations after worktree removal until the session cwd is updated. On Letta Code, `EnterWorktree` cannot switch back to the main working tree (it only accepts linked worktrees under `.letta/worktrees/`). If available, use your platform's `/chdir` command or restart the session to fully restore the session cwd.
+Replace `MAIN_ROOT` with the actual path. On Letta Code, `/chdir` is a
+built-in TUI command that changes the session cwd. There is no agent tool
+that can do this — only the user can run `/chdir`.
+
+Do NOT attempt further Bash commands until the user confirms they have run
+`/chdir`. File tools (`Read`, `Edit`, `Write`) that use absolute paths will
+still work, but Bash requires a valid session cwd.
 
 **Otherwise:** The host environment (harness) owns this workspace. Do NOT remove it. If your platform provides a workspace-exit tool, use it. Otherwise, leave the workspace in place.
 
@@ -367,8 +379,8 @@ pwd  # Verify we're back in the main repo
 - **Fix:** Always `cd` to main repo root before `git worktree remove`
 
 **Session cwd not restored after worktree removal**
-- **Problem:** After `git worktree remove`, the session cwd still points to the deleted directory. File tools (`Read`, `Edit`, `Write`) fail because the directory no longer exists. `EnterWorktree` cannot switch back to the main working tree — it only accepts linked worktrees.
-- **Fix:** Run `cd "$MAIN_ROOT"` in a separate Bash command after removal to restore the persistent shell's cwd. Use absolute paths for all file operations until the session cwd is updated. If available, use `/chdir` or restart the session to fully restore the session cwd.
+- **Problem:** After `git worktree remove`, the session cwd still points to the deleted directory. The Bash tool spawns each command with `cwd` set to the session cwd — if that directory doesn't exist, the spawn fails with ENOENT. `EnterWorktree` cannot switch back to the main working tree (it only accepts linked worktrees). There is no agent tool that can change the session cwd.
+- **Fix:** After removing the worktree, ask the user to run `/chdir <main-repo-path>` to restore the session cwd. Do NOT attempt further Bash commands until the user confirms. File tools with absolute paths still work.
 
 **Cleaning up harness-owned worktrees**
 - **Problem:** Removing a worktree the harness created causes phantom state
@@ -400,8 +412,8 @@ pwd  # Verify we're back in the main repo
 - Clean up worktree for Options 1, 3 & 5 only
 - `cd` to main repo root before worktree removal
 - Run `git worktree prune` after removal
-- `cd` to main repo root after worktree removal to restore shell cwd
-- Use absolute paths for file operations after worktree removal
+- Ask the user to run `/chdir <main-repo-path>` after worktree removal
+- Do NOT attempt Bash commands after worktree removal until the user confirms `/chdir`
 
 ## Integration
 
