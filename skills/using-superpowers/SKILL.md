@@ -169,6 +169,7 @@ Go through these questions in order. Pick the **first match**:
 - `verification-before-completion` BEFORE any completion claim (run it, then say it)
 - `requesting-code-review` BEFORE `finishing-a-development-branch` for quality gate
 - `receiving-code-review` when processing external review feedback
+- `managing-roadmap` is a utility called by `writing-plans` (create phase) and `releasing` (mark complete), not a linear workflow step
 
 ## Hard Gates
 

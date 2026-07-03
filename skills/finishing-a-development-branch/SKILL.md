@@ -397,3 +397,4 @@ git worktree prune  # Self-healing: clean up any stale registrations
 
 - **using-git-worktrees** - Cleans up worktree created by that skill
 - **releasing** - Invoked by Option 3 (Merge and Create Release)
+- **managing-roadmap** - Phase labels created by this skill are used for PR creation (`--label phase/X`)
