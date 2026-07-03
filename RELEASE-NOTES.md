@@ -13,10 +13,14 @@
 - **releasing** Step 7 replaced 19-line inline milestone close with delegation to `managing-roadmap`
 - **finishing-a-development-branch** replaced `--milestone` flag references with `--label phase/X` for roadmap phase labels
 - **releasing** Quick Reference table updated to reflect roadmap phase delegation in Step 7
+- **using-superpowers** bootstrap compressed — merged Instruction Priority + Skill Invocation Rule + The Rule into one section, replaced graphviz skill-flow diagram with prose, simplified How to Access Skills to Letta Code only (removed Copilot, Gemini CLI, Codex), folded instruction priority into User Instructions — 209→160 lines (23% reduction)
+- **using-superpowers** SUBAGENT-STOP changed "skip" to "ignore" for clarity
+- **brainstorming** visual-companion.md removed Gemini CLI launch instructions (Google EOL'd Gemini CLI on 2026-06-18)
 
 ### Removed
 
 - GitHub milestone `gh api` calls from `writing-plans`, `releasing`, and `finishing-a-development-branch` — replaced by `managing-roadmap` skill with label-based approach
+- Gemini CLI references from `using-superpowers/SKILL.md` and `brainstorming/visual-companion.md` — upstream removed Gemini CLI support in v6.1.0
 
 ## v1.7.2 (2026-06-28)
 

@@ -4,20 +4,16 @@ description: Use when starting any conversation - establishes how to find and us
 ---
 
 <SUBAGENT-STOP>
-If you were dispatched as a subagent to execute a specific task, skip this skill.
+If you were dispatched as a subagent to execute a specific task, ignore this skill.
 </SUBAGENT-STOP>
 
-## Instruction Priority
+## The Rule
 
-1. **User's explicit instructions** (direct requests, project rules) — highest priority
-2. **Superpowers skills** — override default system behavior where they conflict
-3. **Default system prompt** — lowest priority
+**Invoke relevant or requested skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If it turns out wrong for the situation, you don't have to use it.
 
-If the user says "don't use TDD" and a skill says "always use TDD," follow the user. The user is in control.
+**Before entering plan mode:** if you haven't already brainstormed, invoke the brainstorming skill first.
 
-## Skill Invocation Rule
-
-If a skill's description matches your current task, you MUST invoke it. This is not optional. If an invoked skill turns out to be wrong for the situation, you don't need to use it.
+Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
 
 **Terminology:** "your human partner" = the user who gave you the task. When a skill says "ask your human partner," it means ask the user in the current conversation.
 
@@ -45,53 +41,9 @@ The `--no-verify` flag bypasses the hook. Use deliberately, not habitually.
 
 ## How to Access Skills
 
-Never read skill files manually with file tools — always use your platform's skill-loading mechanism so the skill is properly activated.
+Never read skill files manually with file tools — use the `Skill` tool so the skill is properly activated. When you invoke a skill, its content is loaded and presented to you—follow it directly.
 
-**In Letta Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly.
-
-**In Copilot:** Use the `@skills` command to load a skill.
-
-**In Gemini CLI:** Use the `/skill` command to load a skill.
-
-**In Codex:** Skills load natively. Follow the instructions presented when a skill activates.
-
-Skills speak in actions rather than naming any one runtime's tools. For per-platform tool equivalents, see the references in `skills/using-superpowers/references/` (platform-specific tool name mappings).
-
-# Using Skills
-
-## The Rule
-
-**Invoke relevant or requested skills BEFORE any response or action.** If a skill's description matches your current task, invoke it. If an invoked skill turns out to be wrong for the situation, you don't need to use it.
-
-```dot
-digraph skill_flow {
-    "User message received" [shape=doublecircle];
-    "About to enter plan mode?" [shape=doublecircle];
-    "Already brainstormed?" [shape=diamond];
-    "Invoke brainstorming skill" [shape=box];
-    "Might any skill apply?" [shape=diamond];
-    "Invoke the skill" [shape=box];
-    "Announce: 'Using [skill] to [purpose]'" [shape=box];
-    "Has checklist?" [shape=diamond];
-    "Create a todo per item" [shape=box];
-    "Follow skill exactly" [shape=box];
-    "Respond (including clarifications)" [shape=doublecircle];
-
-    "About to enter plan mode?" -> "Already brainstormed?";
-    "Already brainstormed?" -> "Invoke brainstorming skill" [label="no"];
-    "Already brainstormed?" -> "Might any skill apply?" [label="yes"];
-    "Invoke brainstorming skill" -> "Might any skill apply?";
-
-    "User message received" -> "Might any skill apply?";
-    "Might any skill apply?" -> "Invoke the skill" [label="yes"];
-    "Might any skill apply?" -> "Respond (including clarifications)" [label="no"];
-    "Invoke the skill" -> "Announce: 'Using [skill] to [purpose]'";
-    "Announce: 'Using [skill] to [purpose]'" -> "Has checklist?";
-    "Has checklist?" -> "Create a todo per item" [label="yes"];
-    "Has checklist?" -> "Follow skill exactly" [label="no"];
-    "Create a todo per item" -> "Follow skill exactly";
-}
-```
+Skills speak in actions rather than naming any one runtime's tools. For Letta Code tool equivalents, see [letta-code-tools.md](references/letta-code-tools.md).
 
 ## Red Flags
 
@@ -205,4 +157,4 @@ Letta Code has built-in skills with similar purposes. Use the superpowers versio
 
 ## User Instructions
 
-Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
+User instructions (direct requests, project rules) take precedence over skills, which in turn override default behavior. Only skip skill workflows when your human partner has explicitly told you to.
