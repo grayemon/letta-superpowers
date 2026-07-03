@@ -1,5 +1,23 @@
 # Release Notes
 
+## v1.8.0 (2026-07-03)
+
+### Added
+
+- **managing-roadmap** new utility skill for tracking project phases via `roadmap.md` + GitHub labels — replaces GitHub milestones with a portable, offline-friendly approach. Supports 5 operations: initialize, create phase, file issues, mark complete, view progress. Includes `references/roadmap-template.md` for bootstrap.
+- **tests/test-managing-roadmap.sh** 14 tests covering skill structure, template format, label conventions, delegation from calling skills, and operation coverage.
+
+### Changed
+
+- **writing-plans** replaced 34-line inline GitHub milestone API section with 8-line delegation to `managing-roadmap`
+- **releasing** Step 7 replaced 19-line inline milestone close with delegation to `managing-roadmap`
+- **finishing-a-development-branch** replaced `--milestone` flag references with `--label phase/X` for roadmap phase labels
+- **releasing** Quick Reference table updated to reflect roadmap phase delegation in Step 7
+
+### Removed
+
+- GitHub milestone `gh api` calls from `writing-plans`, `releasing`, and `finishing-a-development-branch` — replaced by `managing-roadmap` skill with label-based approach
+
 ## v1.7.2 (2026-06-28)
 
 ### Fixed

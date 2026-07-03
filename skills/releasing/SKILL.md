@@ -217,24 +217,11 @@ Check that:
 - Source archives (zip/tar) are downloadable
 - Release notes render correctly
 
-### Step 7: Close Milestone (if applicable)
+### Step 7: Mark Roadmap Phase Complete (if applicable)
 
-If a GitHub milestone exists for this release, close it:
+If a `roadmap.md` exists with an active phase for this release, invoke `managing-roadmap` to mark the phase as Complete.
 
-```bash
-# Find the milestone number for this version
-MILESTONE_NUMBER=$(gh api repos/{owner}/{repo}/milestones \
-  --jq ".[] | select(.title == \"vX.Y.Z\") | .number")
-
-# Close the milestone
-if [[ -n "$MILESTONE_NUMBER" ]]; then
-  gh api repos/{owner}/{repo}/milestones/$MILESTONE_NUMBER \
-    --method PATCH \
-    --field state=closed
-fi
-```
-
-**Skip if:** No milestone exists for this version, or the project doesn't use milestones.
+**Skip if:** No `roadmap.md` exists, or no phase corresponds to this release.
 
 ## Tag Naming Convention
 
@@ -278,7 +265,7 @@ After publishing:
 | 4 | `git push origin main` + `git push origin vX.Y.Z` | Push commits and tag |
 | 5 | `gh release create` or GitHub UI | Create release |
 | 6 | Check release URL | Verify release |
-| 7 | `gh api` PATCH milestone | Close milestone (if applicable) |
+| 7 | Invoke `managing-roadmap` | Mark roadmap phase complete (if applicable) |
 
 ## Common Mistakes
 

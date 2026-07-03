@@ -162,10 +162,10 @@ git branch -d <feature-branch>
 git push -u origin <feature-branch>
 
 # Create PR using your forge tooling (e.g., `gh pr create`, `glab mr create`, or your harness's PR tool)
-# Add --milestone if a milestone exists for this work
+# Add --label phase/X if a roadmap phase label exists for this work
 ```
 
-**If no milestone exists** for this work, omit the `--milestone` flag.
+**If no phase label exists** for this work, omit the `--label` flag.
 
 **Do NOT clean up worktree** — user needs it alive to iterate on PR feedback.
 
