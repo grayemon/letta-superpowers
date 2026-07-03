@@ -387,7 +387,7 @@ Replace `<MAIN_ROOT>` and `<cleanup-worktree-path>` with the actual paths. On Le
 
 **Running git worktree remove from inside the worktree**
 - **Problem:** Command fails silently when CWD is inside the worktree being removed
-- **Fix:** Always `cd` to main repo root before `git worktree remove`
+- **Fix:** Create a transition worktree with `EnterWorktree` first, then run `git worktree remove` from the new worktree
 
 **Session cwd invalid after worktree removal**
 - **Problem:** After `git worktree remove`, the session cwd still points to the deleted directory. The Bash tool spawns each command with `cwd` set to the session cwd — if that directory doesn't exist, the spawn fails with ENOENT. `EnterWorktree` cannot switch back to the main working tree (it only accepts linked worktrees).

@@ -21,6 +21,7 @@
 - **letta-code-tools.md** rewritten to match Letta Code v0.27.18 actual default toolset — `Task`→`Agent` (with alias note), removed `TodoWrite`/`EnterPlanMode`/`ExitPlanMode`/`explore` subagent type, added `TaskCreate`/`TaskGet`/`TaskList`/`TaskUpdate`/`EnterWorktree`/`fork` subagent type, noted `Glob`/`Grep` as non-default
 - **skill-discovery-testing.md** example updated — `Task`→`Agent` tool name
 - **finishing-a-development-branch** Step 7 — fixed session cwd bug after worktree removal: the Bash tool spawns each command with `cwd` set to the session cwd, which points to the deleted worktree after removal. Fix: create a transition worktree with `EnterWorktree` before removing the old worktree, which switches the session cwd to a valid directory. Agent can continue post-cleanup work from the transition worktree. User runs `/chdir` to main and removes the transition worktree at the end.
+- **using-git-worktrees** fixed incorrect tool name `CreateWorktree` → `EnterWorktree` (3 references in Step 1a, Letta Code note, and Red Flags)
 
 ### Removed
 
