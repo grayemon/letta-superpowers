@@ -181,10 +181,10 @@ For each variant:
 
 ## Testing with Letta Code
 
-Use the Task tool to spawn subagents for testing:
+Use the Agent tool to spawn subagents for testing:
 
 ```typescript
-Task({
+Agent({
   subagent_type: "general-purpose",
   description: "Test skill discovery compliance",
   prompt: `

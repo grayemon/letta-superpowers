@@ -18,6 +18,8 @@
 - **brainstorming** visual-companion.md removed Gemini CLI launch instructions (Google EOL'd Gemini CLI on 2026-06-18)
 - **SUBAGENT-STOP** "skip this skill" → "ignore this skill" across all 7 skills with SUBAGENT-STOP tags (brainstorming, executing-plans, finishing-a-development-branch, writing-plans, skill-authoring-tdd, using-git-worktrees, using-superpowers)
 - **executing-plans** fixed stale reference to generic `../using-superpowers/references/` directory — now links to `letta-code-tools.md` specifically
+- **letta-code-tools.md** rewritten to match Letta Code v0.27.18 actual default toolset — `Task`→`Agent` (with alias note), removed `TodoWrite`/`EnterPlanMode`/`ExitPlanMode`/`explore` subagent type, added `TaskCreate`/`TaskGet`/`TaskList`/`TaskUpdate`/`EnterWorktree`/`fork` subagent type, noted `Glob`/`Grep` as non-default
+- **skill-discovery-testing.md** example updated — `Task`→`Agent` tool name
 
 ### Removed
 
