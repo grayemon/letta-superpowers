@@ -311,6 +311,9 @@ After publishing:
 - `finishing-a-development-branch` (Option 3: Merge and Create Release, post-merge follow-up)
 - Directly when user says "create a release" or "do a release"
 
+**Calls:**
+- `managing-roadmap` - Step 7, marks roadmap phase as complete (if applicable)
+
 **Sequence after finishing-a-development-branch:**
 1. Merge completes → Option 3 selected
 2. Invoke releasing skill

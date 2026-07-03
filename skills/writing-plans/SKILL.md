@@ -206,5 +206,8 @@ After saving the plan, offer execution choice:
 **Requires:**
 - using-git-worktrees - should be run in a worktree — set up before writing plans
 
+**Calls:**
+- managing-roadmap - optional, after plan is saved (create phase + file issues)
+
 **Followed by:**
 - subagent-driven-development or executing-plans - implement the plan

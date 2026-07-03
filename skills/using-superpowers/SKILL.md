@@ -153,6 +153,9 @@ Go through these questions in order. Pick the **first match**:
 11. Creating a new release or tag?
    └─ YES → releasing (version, release notes, GitHub release)
 
+11b. Need to track project phases or mark a phase complete?
+   └─ YES → managing-roadmap (roadmap.md + phase labels)
+
 12. Creating or editing a skill?
    └─ YES → skill-authoring-tdd (TDD for skills)
 ```
