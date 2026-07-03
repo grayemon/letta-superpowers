@@ -4,7 +4,7 @@ description: "You MUST use this before any creative work - creating features, bu
 ---
 
 <SUBAGENT-STOP>
-If you were dispatched as a subagent to execute a specific task, skip this skill — brainstorming is done by the controller before dispatch.
+If you were dispatched as a subagent to execute a specific task, ignore this skill — brainstorming is done by the controller before dispatch.
 </SUBAGENT-STOP>
 
 # Brainstorming Ideas Into Designs

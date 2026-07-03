@@ -4,7 +4,7 @@ description: Use when implementation is complete, all tests pass, and you need t
 ---
 
 <SUBAGENT-STOP>
-If you were dispatched as a subagent to implement a specific task, skip this skill — branch finalization is done by the controller.
+If you were dispatched as a subagent to implement a specific task, ignore this skill — branch finalization is done by the controller.
 </SUBAGENT-STOP>
 
 # Finishing a Development Branch
