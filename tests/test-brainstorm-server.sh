@@ -139,10 +139,22 @@ info "Content pushed to $dest_file"
 sleep 0.5
 
 # Verify content is served
+# The server returns a JavaScript bootstrap page when ?key= is present
+# (sets a cookie then redirects to /). Use a cookie jar to follow the
+# session: first request establishes the cookie, second request fetches
+# the actual content from / (without ?key=).
+COOKIE_JAR=$(mktemp)
+BASE_URL="${SERVER_URL%%\?*}"
 TESTS_RUN=$((TESTS_RUN + 1))
-response=$(curl -s "$SERVER_URL") || {
-    fail "HTTP request after content push"
+curl -s -c "$COOKIE_JAR" "$SERVER_URL" > /dev/null || {
+    fail "HTTP request to bootstrap page"
+    rm -f "$COOKIE_JAR"
 }
+response=$(curl -s -b "$COOKIE_JAR" "$BASE_URL") || {
+    fail "HTTP request after content push"
+    rm -f "$COOKIE_JAR"
+}
+rm -f "$COOKIE_JAR"
 
 if echo "$response" | grep -q "Test Options"; then
     pass "Content served correctly"
