@@ -169,7 +169,7 @@ After the plan is saved, offer to create a tracking phase.
 **Ask the user:** "Should I create a roadmap phase and file issues for this plan?"
 
 **If yes:** Invoke `managing-roadmap` to:
-1. Create a phase in `roadmap.md` with a phase label
+1. Create a phase in `roadmap.md` (repo root) with a phase label
 2. File issues for each task, tagged with the phase label
 3. Update `roadmap.md` with issue numbers and checklist entries
 
