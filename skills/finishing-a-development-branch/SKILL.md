@@ -163,6 +163,7 @@ git push -u origin <feature-branch>
 
 # Create PR using your forge tooling (e.g., `gh pr create`, `glab mr create`, or your harness's PR tool)
 # Add --label phase/X if a roadmap phase label exists for this work
+# To find the phase label: read roadmap.md and look for the active phase (Status: In Progress)
 ```
 
 **If no phase label exists** for this work, omit the `--label` flag.

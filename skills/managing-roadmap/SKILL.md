@@ -49,7 +49,7 @@ Track project phases, sub-projects, and issue progress using a `roadmap.md` file
 
 ### 1. Initialize
 
-Bootstrap `roadmap.md` if it doesn't exist:
+Bootstrap `roadmap.md` in the **repo root** if it doesn't exist:
 
 ```bash
 if [ ! -f roadmap.md ]; then
@@ -60,7 +60,16 @@ EOF
 fi
 ```
 
+**Location:** Always in the repo root (`./roadmap.md`). Never in `docs/` — that directory is gitignored in many projects.
+
 Use the template in `references/roadmap-template.md` for a richer starting point.
+
+**Commit after initializing:**
+
+```bash
+git add roadmap.md
+git commit -m "docs: Initialize roadmap.md"
+```
 
 ### 2. Create Phase
 
@@ -106,22 +115,38 @@ gh issue create \
 - Add the issue number to the `**Issues:**` line
 - Add a checklist entry: `- [ ] #N — [Issue title]`
 
+**After all issues are filed and roadmap.md is updated**, commit:
+
+```bash
+git add roadmap.md
+git commit -m "docs: Add phase [phase-name] to roadmap.md"
+```
+
 ### 4. Mark Phase Complete
 
 After a release, update the phase status in `roadmap.md`:
+
+**Find the right phase:** Read `roadmap.md` and look for the phase whose work corresponds to this release. Match by version number in the phase name (e.g., "Phase 3: v1.8.0 Release") or by the issues included in the release.
 
 1. Change `**Status:**` from `In Progress` to `Complete`
 2. Check all checklist items: `- [x]` for closed issues
 3. Verify all issues are closed:
 
 ```bash
-OPEN_COUNT=$(gh issue list --label "phase/[kebab-case-name]" --state open | wc -l)
+OPEN_COUNT=$(gh issue list --label "phase/[kebab-case-name]" --state open --json number | jq length)
 if [[ "$OPEN_COUNT" -gt 0 ]]; then
   echo "Warning: $OPEN_COUNT open issues remain for this phase."
 fi
 ```
 
 **If open issues remain:** Warn the user. Don't mark as Complete until resolved or explicitly waived.
+
+**After updating roadmap.md**, commit:
+
+```bash
+git add roadmap.md
+git commit -m "docs: Mark phase [phase-name] as complete in roadmap.md"
+```
 
 ### 5. View Progress
 
@@ -132,9 +157,9 @@ Query GitHub for open/closed issue counts per phase:
 gh issue list --label "phase/[kebab-case-name]" --state open
 gh issue list --label "phase/[kebab-case-name]" --state closed
 
-# Summary counts
-echo "Open: $(gh issue list --label 'phase/[kebab-case-name]' --state open  | wc -l)"
-echo "Closed: $(gh issue list --label 'phase/[kebab-case-name]' --state closed | wc -l)"
+# Summary counts (use --json to avoid counting header rows)
+echo "Open: $(gh issue list --label 'phase/[kebab-case-name]' --state open  --json number | jq length)"
+echo "Closed: $(gh issue list --label 'phase/[kebab-case-name]' --state closed --json number | jq length)"
 ```
 
 Or read `roadmap.md` directly for a full overview — no network needed.
@@ -173,7 +198,7 @@ Or read `roadmap.md` directly for a full overview — no network needed.
 
 **Marking a phase complete with open issues**
 - **Problem:** roadmap.md says Complete but work remains
-- **Fix:** Always verify with `gh issue list --state open` before marking Complete
+- **Fix:** Always verify with `gh issue list --state open --json number | jq length` before marking Complete
 
 ## Integration
 
