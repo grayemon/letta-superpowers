@@ -4,7 +4,7 @@ description: Use when starting feature work that needs isolation from current wo
 ---
 
 <SUBAGENT-STOP>
-If you were dispatched as a subagent to execute a specific task, skip this skill — your controller has already set up the workspace.
+If you were dispatched as a subagent to execute a specific task, ignore this skill — your controller has already set up the workspace.
 </SUBAGENT-STOP>
 
 # Using Git Worktrees

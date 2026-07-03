@@ -4,7 +4,7 @@ description: Use when creating new skills, editing existing skills, or verifying
 ---
 
 <SUBAGENT-STOP>
-If you were dispatched as a subagent, skip this skill — skill authoring is a meta-task done by the controller.
+If you were dispatched as a subagent, ignore this skill — skill authoring is a meta-task done by the controller.
 </SUBAGENT-STOP>
 
 # Skill Authoring TDD

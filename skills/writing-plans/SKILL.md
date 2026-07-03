@@ -4,7 +4,7 @@ description: Use when you have a spec or requirements for a multi-step task, bef
 ---
 
 <SUBAGENT-STOP>
-If you were dispatched as a subagent to implement a plan, skip this skill — your job is to execute, not to write plans.
+If you were dispatched as a subagent to implement a plan, ignore this skill — your job is to execute, not to write plans.
 </SUBAGENT-STOP>
 
 # Writing Plans
