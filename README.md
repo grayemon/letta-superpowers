@@ -46,7 +46,7 @@ cp -r /tmp/superpowers-letta/skills/* .skills/
 ## Skills Library
 
 ### Testing
-- **test-driven-development** - RED-GREEN-REFACTOR cycle with testing anti-patterns reference
+- **test-driven-development** - RED-GREEN-REFACTOR cycle with writing-good-tests reference
 
 ### Debugging
 - **systematic-debugging** - 4-phase root cause process
