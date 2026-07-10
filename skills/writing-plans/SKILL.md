@@ -162,19 +162,6 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
-## Optional: Create Roadmap Phase
-
-After the plan is saved, offer to create a tracking phase.
-
-**Ask the user:** "Should I create a roadmap phase and file issues for this plan?"
-
-**If yes:** Invoke `managing-roadmap` to:
-1. Create a phase in `roadmap.md` (repo root) with a phase label
-2. File issues for each task, tagged with the phase label
-3. Update `roadmap.md` with issue numbers and checklist entries
-
-**Skip if:** The user declines, or the plan is for a small fix that doesn't warrant tracking.
-
 ## Execution Handoff
 
 After saving the plan, offer execution choice:
@@ -205,9 +192,6 @@ After saving the plan, offer execution choice:
 
 **Requires:**
 - using-git-worktrees - should be run in a worktree — set up before writing plans
-
-**Calls:**
-- managing-roadmap - optional, after plan is saved (create phase + file issues)
 
 **Followed by:**
 - subagent-driven-development or executing-plans - implement the plan
