@@ -31,7 +31,7 @@ You MUST create a task for each of these items and complete them in order:
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
 6. **Create isolated workspace** — invoke using-git-worktrees skill BEFORE writing the spec (required because step 7 commits)
-7. **Write design doc** — save to `docs/specs/YYYY-MM-DD-<topic>-design.md` and commit
+7. **Write design doc** — save to `letta-superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
 8. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 9. **User reviews written spec** — ask user to review the spec file before proceeding
 10. **Transition to implementation** — invoke writing-plans skill to create implementation plan
@@ -117,7 +117,7 @@ digraph brainstorming {
 
 **Documentation:**
 
-- Write the validated design (spec) to `docs/specs/YYYY-MM-DD-<topic>-design.md`
+- Write the validated design (spec) to `letta-superpowers/specs/YYYY-MM-DD-<topic>-design.md`
   - (User preferences for spec location override this default)
 - Commit the design document to git
 

@@ -5,6 +5,7 @@ docs/
 .claude/
 .letta/
 .skills
+letta-superpowers/
 .DS_Store
 node_modules/
 inspo
