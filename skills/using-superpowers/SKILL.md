@@ -150,6 +150,8 @@ Letta Code has built-in skills with similar purposes. Use the superpowers versio
 
 **Why:** Superpowers skills integrate with the full workflow chain (worktree setup, review, cleanup). Built-in alternatives lack detection, consent, setup, and verification steps, and break integration with other superpowers skills.
 
+**`dispatching-coding-agents` is for EXTERNAL CLI tools only (`claude`, `codex`) — NOT for spawning new Letta Code agents.** Do not use `letta -p` to spawn new Letta Code agents as a substitute for subagents. For Letta Code subagents, ALWAYS use the `Agent` tool: `Agent({ subagent_type: "general-purpose", description: "...", prompt: "..." })`. The `dispatching-coding-agents` skill normalizes "shell out to a coding agent via Bash," but this pattern must NOT be applied to the `letta` CLI itself — that creates isolated agents without shared context, memory, or tool access.
+
 ## User Instructions
 
 User instructions (direct requests, project rules) take precedence over skills, which in turn override default behavior. Only skip skill workflows when your human partner has explicitly told you to.
