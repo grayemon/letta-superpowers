@@ -15,13 +15,17 @@ Write comprehensive implementation plans assuming the engineer is skilled but un
 
 Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Include the test code in full — don't just say "write tests." Show the assertion, the setup, and the expected result.
 
+**Plans reference the spec; they never restate, paraphrase, or summarize it.** The spec owns the WHAT and WHY — requirements, acceptance criteria, design decisions; the plan owns the HOW — tasks, files, code, commands. Cite it by path in the header and by section where a task needs context. Reference discipline never means skipping the spec: if brainstorming produced one, it exists and the plan cites it. No Placeholders still requires repeating code and commands WITHIN the plan; copying FROM the spec is different: a step that needs a requirement's prose is under-specified — turn it into a concrete action. Snapshotting spec text into the plan hides drift, not prevents it. "Zero context" means each step is mechanically executable, not that the plan repeats the spec.
+
+**Two narrow exceptions to reference discipline** — subagents executing the plan see the plan (or a single task of it), never the spec, so two kinds of spec content travel in the plan itself: the `## Global Constraints` section (the spec's project-wide requirements, exact values copied verbatim) and each task's `**Interfaces:**` block (exact signatures). Copy those values exactly; everything else stays referenced, never restated.
+
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
 **Context:** This should be run in a dedicated worktree (created by using-git-worktrees skill).
 
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
-- (User preferences for plan location override this default)
+- (An explicit user instruction overrides this default; an existing differently-named docs directory does not)
 
 ## Scope Check
 
@@ -67,6 +71,8 @@ independently testable deliverable.
 > **For subagents:** REQUIRED SUB-SKILL: Use subagent-driven-development (recommended) or executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
+
+**Spec:** [Path to the spec doc, e.g. `docs/specs/YYYY-MM-DD-<topic>-design.md` — requirements and design decisions live there; do not restate them here. Only if no spec doc exists (requirements arrived conversationally; brainstorming never ran): write "none — requirements:" and state them once here, not per task]
 
 **Architecture:** [2-3 sentences about approach]
 
