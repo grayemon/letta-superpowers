@@ -1,5 +1,29 @@
 # Release Notes
 
+## v1.9.0 (2026-07-10)
+
+### Changed
+
+- **Skill content cleanup** — removed persuasive recaps, narrative bloat, and redundant sections across 11 skills (181 lines deleted). Replaced `using-git-worktrees` Common Mistakes + Red Flags with a concise rationalization table. Adapted from upstream `skill-detritus-cleanup` branch.
+  - `brainstorming`: Removed Key Principles section (folded into points of use); added YAGNI to approach list
+  - `dispatching-parallel-agents`: Removed Key Benefits and Real-World Impact sections
+  - `executing-plans`: Trimmed quality claim from subagent note
+  - `receiving-code-review`: Removed The Bottom Line recap
+  - `requesting-code-review`: Removed Integration with Workflows section; trimmed overview
+  - `skill-authoring-tdd`: Removed The Bottom Line recap
+  - `subagent-driven-development`: Removed Advantages section (32 lines)
+  - `systematic-debugging`: Removed overview narrative line; removed Real-World Impact
+  - `using-git-worktrees`: Replaced Common Mistakes + Red Flags with rationalization table (53→12 lines)
+  - `verification-before-completion`: Removed Why This Matters and The Bottom Line
+  - `writing-plans`: Removed Remember recap
+- **test-driven-development** replaced `testing-anti-patterns.md` (299 lines) with `writing-good-tests.md` (198 lines) — principles-based reference with two core principles: "Name the break" and "Exercise the real thing". Includes gate functions, mutation check, and quick reference table. Adapted from upstream `tdd-writing-good-tests` branch.
+- **writing-plans** added spec-reference discipline: "Plans reference the spec; they never restate, paraphrase, or summarize it." Two narrow exceptions: Global Constraints (verbatim) and Interfaces blocks (exact signatures). Added Spec path field to plan document header. Refined plan location override wording. Adapted from upstream `writing-plans-crisp` branch.
+
+### Removed
+
+- **managing-roadmap** skill removed — added unnecessary complexity (PR #20). Skill count: 17→16. All cross-references cleaned from decision ladder, integration sections, and quick reference tables.
+- **testing-anti-patterns.md** replaced by `writing-good-tests.md`
+
 ## v1.8.0 (2026-07-03)
 
 ### Added
