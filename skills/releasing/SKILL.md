@@ -217,12 +217,6 @@ Check that:
 - Source archives (zip/tar) are downloadable
 - Release notes render correctly
 
-### Step 7: Mark Roadmap Phase Complete (if applicable)
-
-If a `roadmap.md` exists in the repo root with an active phase for this release, invoke `managing-roadmap` to mark the phase as Complete.
-
-**Skip if:** No `roadmap.md` exists in the repo root, or no phase corresponds to this release.
-
 ## Tag Naming Convention
 
 | Pattern | Example | Use Case |
@@ -265,7 +259,6 @@ After publishing:
 | 4 | `git push origin main` + `git push origin vX.Y.Z` | Push commits and tag |
 | 5 | `gh release create` or GitHub UI | Create release |
 | 6 | Check release URL | Verify release |
-| 7 | Invoke `managing-roadmap` | Mark roadmap phase complete (if applicable) |
 
 ## Common Mistakes
 
@@ -310,9 +303,6 @@ After publishing:
 **Can be called by:**
 - `finishing-a-development-branch` (Option 3: Merge and Create Release, post-merge follow-up)
 - Directly when user says "create a release" or "do a release"
-
-**Calls:**
-- `managing-roadmap` - Step 7, marks roadmap phase as complete (if applicable)
 
 **Sequence after finishing-a-development-branch:**
 1. Merge completes → Option 3 selected

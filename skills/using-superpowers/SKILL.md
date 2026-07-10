@@ -74,7 +74,6 @@ Go through these questions in order. Pick the **first match**:
 
 4. Do you have a spec and need to break it into tasks?
    └─ YES → writing-plans (create implementation plan)
-   └─ writing-plans may call managing-roadmap to create a phase + file issues
 
 5. Do you have a plan and need to implement it?
    ├─ SAME SESSION + subagents available?
@@ -106,9 +105,6 @@ Go through these questions in order. Pick the **first match**:
 11. Creating a new release or tag?
    └─ YES → releasing (version, release notes, GitHub release)
 
-11b. Need to mark a project phase complete after release?
-   └─ YES → managing-roadmap (mark phase complete in roadmap.md)
-
 12. Creating or editing a skill?
    └─ YES → skill-authoring-tdd (TDD for skills)
 ```
@@ -122,7 +118,6 @@ Go through these questions in order. Pick the **first match**:
 - `verification-before-completion` BEFORE any completion claim (run it, then say it)
 - `requesting-code-review` BEFORE `finishing-a-development-branch` for quality gate
 - `receiving-code-review` when processing external review feedback
-- `managing-roadmap` is a utility called by `writing-plans` (create phase) and `releasing` (mark complete), not a linear workflow step — step 11b covers the standalone "mark complete" trigger only
 
 ## Hard Gates
 

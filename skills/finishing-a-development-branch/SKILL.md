@@ -162,11 +162,7 @@ git branch -d <feature-branch>
 git push -u origin <feature-branch>
 
 # Create PR using your forge tooling (e.g., `gh pr create`, `glab mr create`, or your harness's PR tool)
-# Add --label phase/X if a roadmap phase label exists for this work
-# To find the phase label: read roadmap.md in the repo root and look for the active phase (Status: In Progress)
 ```
-
-**If no phase label exists** for this work, omit the `--label` flag.
 
 **Do NOT clean up worktree** — user needs it alive to iterate on PR feedback.
 
@@ -436,4 +432,3 @@ Replace `<MAIN_ROOT>` and `<cleanup-worktree-path>` with the actual paths. On Le
 
 - **using-git-worktrees** - Cleans up worktree created by that skill
 - **releasing** - Invoked by Option 3 (Merge and Create Release)
-- **managing-roadmap** - Phase labels created by this skill are used for PR creation (`--label phase/X`)
