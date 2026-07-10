@@ -23,9 +23,9 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Context:** This should be run in a dedicated worktree (created by using-git-worktrees skill).
 
-**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** `letta-superpowers/plans/YYYY-MM-DD-<feature-name>.md`
 
-- (An explicit user instruction overrides this default; an existing differently-named docs directory does not)
+- (An explicit user instruction overrides this default; an existing differently-named directory does not)
 
 ## Scope Check
 
@@ -72,7 +72,7 @@ independently testable deliverable.
 
 **Goal:** [One sentence describing what this builds]
 
-**Spec:** [Path to the spec doc, e.g. `docs/specs/YYYY-MM-DD-<topic>-design.md` — requirements and design decisions live there; do not restate them here. Only if no spec doc exists (requirements arrived conversationally; brainstorming never ran): write "none — requirements:" and state them once here, not per task]
+**Spec:** [Path to the spec doc, e.g. `letta-superpowers/specs/YYYY-MM-DD-<topic>-design.md` — requirements and design decisions live there; do not restate them here. Only if no spec doc exists (requirements arrived conversationally; brainstorming never ran): write "none — requirements:" and state them once here, not per task]
 
 **Architecture:** [2-3 sentences about approach]
 
@@ -165,7 +165,7 @@ If you find issues, fix them inline. No need to re-review — just fix and move 
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `letta-superpowers/plans/<filename>.md`. Two execution options:**
 
 **1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
 
